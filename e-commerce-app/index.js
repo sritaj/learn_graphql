@@ -126,6 +126,8 @@ const typeDefs = gql`
     price: Float!
     onSale: Boolean!
     image: String!
+    # Specifying Many to One mapping
+    category: Category
   }
 
   type Category {
@@ -166,6 +168,13 @@ const resolvers = {
     products: (parent, args, context) => {
       const categoryID = parent.id;
       return products.filter((product) => product.categoryID === categoryID);
+    },
+  },
+  // resolver for Product
+  Product: {
+    category: (parent, args, context) => {
+      const categoryID = parent.categoryID;
+      return categories.find((category) => category.id === categoryID);
     },
   },
 };
