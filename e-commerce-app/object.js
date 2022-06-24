@@ -87,6 +87,8 @@ const products = [
 const typeDefs = gql`
   type Query {
     products: [Product]
+    # Querying object with one variable
+    product(id: ID!): Product
   }
 
   # Specifying the product type for the above query
@@ -104,6 +106,13 @@ const resolvers = {
   Query: {
     products: () => {
       return products;
+    },
+    // resolver for product based on id
+    product: (parent, args, context) => {
+      const productID = args.id;
+      const product = products.find((product) => product.id === productID);
+      if (!product) return null;
+      return product;
     },
   },
 };
