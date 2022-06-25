@@ -2,7 +2,7 @@ const { gql } = require("apollo-server");
 
 exports.typeDefs = gql`
   type Query {
-    products: [Product!]!
+    products(filter: ProductsFilterInput): [Product!]!
     categories: [Category]!
     # Querying object with one variable
     product(id: ID!): Product
@@ -27,7 +27,7 @@ exports.typeDefs = gql`
     id: ID!
     name: String!
     # Specifying One to Many mapping
-    products: [Product!]
+    products(filter: ProductsFilterInput): [Product!]
   }
 
   type Review {
@@ -36,5 +36,10 @@ exports.typeDefs = gql`
     title: String!
     comment: String!
     rating: Int!
+  }
+
+  input ProductsFilterInput {
+    onSale: Boolean
+    avgRating: Int
   }
 `;
