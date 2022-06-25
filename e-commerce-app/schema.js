@@ -20,6 +20,7 @@ exports.typeDefs = gql`
     image: String!
     # Specifying Many to One mapping
     category: Category
+    reviews: [Review!]!
   }
 
   type Category {
@@ -27,5 +28,13 @@ exports.typeDefs = gql`
     name: String!
     # Specifying One to Many mapping
     products: [Product!]
+  }
+
+  type Review {
+    id: ID!
+    date: String!
+    title: String!
+    comment: String!
+    rating: Int!
   }
 `;
