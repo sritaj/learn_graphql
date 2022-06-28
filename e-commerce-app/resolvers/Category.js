@@ -1,7 +1,7 @@
 // resolver for Category
 exports.Category = {
-  products: ({ id: categoryID }, { filter }, { products, reviews }) => {
-    const categoryProducts = products.filter(
+  products: ({ id: categoryID }, { filter }, { db }) => {
+    const categoryProducts = db.products.filter(
       (product) => product.categoryID === categoryID
     );
     let filteredCategoryProducts = categoryProducts;
@@ -20,7 +20,7 @@ exports.Category = {
           (product) => {
             let sumRating = 0;
             let numberOfReviews = 0;
-            reviews.forEach((review) => {
+            db.reviews.forEach((review) => {
               if (review.productId === product.id) {
                 sumRating += review.rating;
                 numberOfReviews++;
