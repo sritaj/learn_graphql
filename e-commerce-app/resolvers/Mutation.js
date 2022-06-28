@@ -26,4 +26,19 @@ exports.Mutation = {
 
     return newProduct;
   },
+  addProductReview: (parent, { input }, { reviews }) => {
+    const { date, title, comment, rating, productID } = input;
+
+    const newReview = {
+      id: uuid(),
+      date,
+      title,
+      comment,
+      rating,
+      productID,
+    };
+    reviews.push(newReview);
+
+    return newReview;
+  },
 };
