@@ -20,6 +20,7 @@ exports.typeDefs = gql`
     deleteAReview(id: ID!): Boolean!
     updateCategory(id: ID!, input: UpdateCategoryInput!): Category!
     updateProduct(id: ID!, input: UpdateProductInput!): Product!
+    updateReview(id: ID!, input: UpdateReviewInput!): Review!
   }
 
   # Specifying the product type for the above query
@@ -85,5 +86,9 @@ exports.typeDefs = gql`
     comment: String!
     rating: Int!
     productID: String!
+  }
+
+  input UpdateReviewInput {
+    rating: Int!
   }
 `;
