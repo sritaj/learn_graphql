@@ -7,6 +7,8 @@ exports.typeDefs = gql`
     # Querying object with one variable
     product(id: ID!): Product
     category(id: ID!): Category
+    review(id: ID!): Review
+    reviews: [Review]!
   }
 
   type Mutation {

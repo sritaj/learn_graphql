@@ -1,6 +1,7 @@
 const { reviews } = require("../db");
 
 exports.Query = {
+  //resolver for products based on filter
   products: (parent, { filter }, { db }) => {
     let filteredProducts = db.products;
 
@@ -36,6 +37,7 @@ exports.Query = {
     if (!product) return null;
     return product;
   },
+  //resolver for categories
   categories: (parent, args, { db }) => {
     return db.categories;
   },
@@ -46,5 +48,15 @@ exports.Query = {
     );
     if (!category) return null;
     return category;
+  },
+  // resolver for review based on id
+  review: (parent, { id: reviewID }, { db }) => {
+    const review = db.reviews.find((review) => review.id === reviewID);
+    if (!review) return null;
+    return review;
+  },
+  //resolver for reviews
+  reviews: (parent, args, { db }) => {
+    return db.reviews;
   },
 };
