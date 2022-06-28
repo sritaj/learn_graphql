@@ -14,6 +14,7 @@ exports.typeDefs = gql`
     addCategory(input: AddCategoryInput!): Category!
     addProductReview(input: AddProductReviewInput!): Review!
     deleteACategory(id: ID!): Boolean!
+    deleteAProduct(id: ID!): Boolean!
   }
 
   # Specifying the product type for the above query
