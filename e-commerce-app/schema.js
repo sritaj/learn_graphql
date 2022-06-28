@@ -9,6 +9,10 @@ exports.typeDefs = gql`
     category(id: ID!): Category
   }
 
+  type Mutation {
+    addCategory(input: AddCategoryInput!): Category!
+  }
+
   # Specifying the product type for the above query
   type Product {
     id: ID
@@ -41,5 +45,9 @@ exports.typeDefs = gql`
   input ProductsFilterInput {
     onSale: Boolean
     avgRating: Int
+  }
+
+  input AddCategoryInput {
+    name: String!
   }
 `;
