@@ -19,6 +19,7 @@ exports.typeDefs = gql`
     deleteAProduct(id: ID!): Boolean!
     deleteAReview(id: ID!): Boolean!
     updateCategory(id: ID!, input: UpdateCategoryInput!): Category!
+    updateProduct(id: ID!, input: UpdateProductInput!): Product!
   }
 
   # Specifying the product type for the above query
@@ -70,6 +71,12 @@ exports.typeDefs = gql`
     price: Float!
     onSale: Boolean!
     image: String!
+  }
+
+  input UpdateProductInput {
+    quantity: Int!
+    price: Float!
+    onSale: Boolean!
   }
 
   input AddProductReviewInput {
