@@ -1,0 +1,19 @@
+{
+  "name": "blog-app",
+  "version": "1.0.0",
+  "description": "blog-app application showcasing graphql with apollo server with integration with postgreSql, prisma and using typescript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "graphql",
+    "apollo",
+    "server",
+    "typescript",
+    "postgresql",
+    "prisma"
+  ],
+  "author": "sritaj kumar patel",
+  "license": "ISC"
+}
