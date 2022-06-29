@@ -14,6 +14,7 @@ const typeDefs = gql`
   type Group {
     id: ID!
     featureSet: GroupFeature
+    hasCar(id: ID!): Boolean!
     cars(skip: Int!, take: Int!): [Car!]!
     name: String!
     imageID: Image!
