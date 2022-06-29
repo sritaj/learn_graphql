@@ -12,7 +12,17 @@ const typeDefs = gql`
     groupAddCars(groupId: ID!, carId: ID!)
     groupRemoveCars(groupId: ID!, carId: ID!)
     groupCreate(name: String! image: ImageInput! description: String! featureSet: GroupFeatureFields)
-    groupUpdate(groupId: ID! groupInput: GroupInput!)
+    groupUpdate(groupId: ID! groupInput: GroupInput!): GroupUpdatePayload!
+  }
+
+  type GroupUpdatePayload {
+    userErrors: [UserErrors!]!
+    group: Group
+  }
+
+  type UserErrors {
+    message: String!
+    field: [String!]!
   }
 
   input GroupInput {
