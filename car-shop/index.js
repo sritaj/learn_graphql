@@ -11,6 +11,8 @@ const typeDefs = gql`
     update
     publish
     unpublish
+    addCars
+    removeCars
   }
 
   type Car {
