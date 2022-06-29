@@ -11,22 +11,18 @@ const typeDefs = gql`
   }
   type ManualGroup {
     Image
-    [GroupMemebership]
+    [Car]
   }
 
   type AutomaticGroup {
     Image
-    [GroupMemebership]
+    [Car]
     [AutomationGroupFeatures]
   }
 
   type AutomaticGroupFeatures {
   }
 
-  type GroupMembership {
-    Group
-    Car
-  }
 `;
 
 const server = new ApolloServer({
