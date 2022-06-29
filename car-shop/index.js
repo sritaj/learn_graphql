@@ -10,16 +10,20 @@ const typeDefs = gql`
     color: String!
     make: String!
   }
-  
+
   type Group {
-    Image
-    [Car]
-    [AutomationGroupFeatures]
+    id: ID!
+    features: [GroupFeatures!]!
+    applyFeaturesSeperately: Boolean!
+    cars: [Car!]!
+    name: String!
+    imageID: ID!
+    bodyHTML: String!
   }
 
-  type AutomaticGroupFeatures {
+  type GroupFeatures {
+    feature: String!
   }
-
 `;
 
 const server = new ApolloServer({
