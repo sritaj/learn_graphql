@@ -4,7 +4,8 @@
   "description": "blog-app application showcasing graphql with apollo server with integration with postgreSql, prisma and using typescript",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon --watch './**/*.ts' --exec 'ts-node' src/index.ts"
   },
   "keywords": [
     "graphql",
@@ -15,5 +16,9 @@
     "prisma"
   ],
   "author": "sritaj kumar patel",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.7.4"
+  }
 }
