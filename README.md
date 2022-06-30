@@ -1,3 +1,5 @@
+<img src="https://cdn.codersociety.com/uploads/graphql-reasons.png" alt="GraphQL"/>
+
 # Introduction To GraphQL
 
 This repository includes examples and mini-projects demonstrating GraphQL features and implementations
@@ -7,6 +9,8 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
 1. JavaScript
 2. NodeJS
 3. GraphQL
+4. PostgreSQL
+5. TypeScript
 
 ## Pre-Requisite
 
@@ -24,6 +28,7 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
 2. In main project directory open terminal and run the command `npm install` to download all dependencies
 3. Navigate to sub-projects and open terminal and run the command `npm install` to download all dependencies
 4. **e-commerce-app** - For e-commerce-app mini project, run the command `npm run test-live`, this will start the server; the localhost url will be displayed in the console on clicking which it will re-direct to the server
+5. **car-shop** - dummy project to list the best practices for defining GraphQL schemas, queries etc; no implementation to check
 
 ## Special Thanks
 
