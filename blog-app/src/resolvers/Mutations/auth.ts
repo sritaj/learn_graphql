@@ -1,5 +1,6 @@
 import { Context } from "../../index";
 import validator from "validator";
+import bcryptjs from "bcryptjs";
 
 interface SignUpArgs {
   email: string;
@@ -44,6 +45,16 @@ export const authResolvers = {
         user: null,
       };
     }
+
+    const hashedPassword = await bcryptjs.hash(password, 10);
+
+    await prisma.user.create({
+      data: {
+        email,
+        name,
+        password: hashedPassword,
+      },
+    });
 
     return {
       userErrors: [],
