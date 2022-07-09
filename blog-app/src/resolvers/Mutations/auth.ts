@@ -1,6 +1,8 @@
 import { Context } from "../../index";
 import validator from "validator";
 import bcryptjs from "bcryptjs";
+import JWT from "jsonwebtoken";
+import { JSON_SIGNATURE } from "../key";
 
 interface SignUpArgs {
   email: string;
@@ -11,8 +13,9 @@ interface SignUpArgs {
 
 interface UserPayload {
   userErrors: { message: string }[];
-  user: null;
+  token: string | null;
 }
+
 export const authResolvers = {
   signup: async (
     _: any,
@@ -24,7 +27,7 @@ export const authResolvers = {
     if (!isEmail) {
       return {
         userErrors: [{ message: "Invalid email" }],
-        user: null,
+        token: null,
       };
     }
 
@@ -35,20 +38,20 @@ export const authResolvers = {
     if (!isValidPassword) {
       return {
         userErrors: [{ message: "Min password length should be >=5" }],
-        user: null,
+        token: null,
       };
     }
 
     if (!name || !bio) {
       return {
         userErrors: [{ message: "Name or Bio field is missing" }],
-        user: null,
+        token: null,
       };
     }
 
     const hashedPassword = await bcryptjs.hash(password, 10);
 
-    await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         email,
         name,
@@ -56,9 +59,20 @@ export const authResolvers = {
       },
     });
 
+    const token = await JWT.sign(
+      {
+        userID: user.id,
+        email: user.email,
+      },
+      JSON_SIGNATURE,
+      {
+        expiresIn: 36000000,
+      }
+    );
+
     return {
       userErrors: [],
-      user: null,
+      token,
     };
   },
 };
