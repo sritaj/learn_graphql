@@ -61,6 +61,23 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
 
 6. Run the command `npx prisma studio`, it will launch the studio in localhost, where user can see the models created using **schema.prisma**
 
+## Additional NPM Libraries Used
+
+1.  [Validator](https://www.npmjs.com/package/validator) - For validating Email, Password and relevant fields (instead of using Regex, checking length etc)
+
+               npm install validator
+               npm install @types/validator
+
+2.  [Bcryptjs](https://www.npmjs.com/package/bcryptjs) - For generating hashed passwords
+
+               npm install bcyptjs
+               npm install @types/bcryptjs
+
+3.  [JsonWebToken](https://www.npmjs.com/package/jsonwebtoken) - For generating token on user creation
+
+               npm install jsonwebtoken
+               npm install @types/jsonwebtoken
+
 ## Special Thanks
 
 Special Thanks to Instructors, online communities and official documentation which has done splendid job on explaining the concepts
