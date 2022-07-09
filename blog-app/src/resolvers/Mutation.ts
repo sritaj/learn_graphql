@@ -102,4 +102,35 @@ export const Mutation = {
       }),
     };
   },
+  postDelete: async (
+    _: any,
+    { postId }: { postId: string },
+    { prisma }: Context
+  ): Promise<PostPayloadType> => {
+    const postExist = await prisma.post.findUnique({
+      where: {
+        id: Number(postId),
+      },
+    });
+
+    if (!postExist) {
+      return {
+        userErrors: [
+          {
+            message: "Post doesn't exist",
+          },
+        ],
+        post: null,
+      };
+    }
+
+    return {
+      userErrors: [],
+      post: prisma.post.delete({
+        where: {
+          id: Number(postId),
+        },
+      }),
+    };
+  },
 };
