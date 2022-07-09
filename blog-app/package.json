@@ -23,6 +23,8 @@
   },
   "dependencies": {
     "@prisma/client": "^4.0.0",
-    "prisma": "^4.0.0"
+    "@types/validator": "^13.7.4",
+    "prisma": "^4.0.0",
+    "validator": "^13.7.0"
   }
 }
