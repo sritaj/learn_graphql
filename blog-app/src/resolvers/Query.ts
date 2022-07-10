@@ -19,4 +19,13 @@ export const Query = {
     });
     return posts;
   },
+  profile: async (
+    _: any,
+    { userID }: { userID: string },
+    { prisma }: Context
+  ) => {
+    return prisma.profile.findUnique({
+      where: { userID: Number(userID) },
+    });
+  },
 };
