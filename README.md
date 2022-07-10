@@ -55,11 +55,15 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
 
 3. Select the DB created,go to settings, click on View credentials, copy the URI
 
-4. Go to the Project, create .env file at root-level, and define the "DATABASE_URL", ex: `DATABASE_URL="postgres://acnpigodzgxyyy:8.....`, the URI is the one copied in above step
+4. Go to the Project **blog-app**, create .env file at root-level, and define the "DATABASE_URL", ex: `DATABASE_URL="postgres://acnpigodzgxyyy:8.....`, the URI is the one copied in above step
 
 5. Open the terminal and run the command `npx prisma db push`, it will show the success message _🚀 Your database is now in sync with your Prisma schema._ and the Prisma Client will be generated
 
 6. Run the command `npx prisma studio`, it will launch the studio in localhost, where user can see the models created using **schema.prisma**
+
+### blog-app-frontend
+
+1.
 
 ## Additional NPM Libraries Used
 
@@ -77,6 +81,10 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
 
                npm install jsonwebtoken
                npm install @types/jsonwebtoken
+
+4.  [DataLoader](https://www.npmjs.com/package/dataloader) - For batching and caching API requests for fetching Data
+
+               npm install --save dataloader
 
 ## Special Thanks
 
