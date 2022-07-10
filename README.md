@@ -30,7 +30,7 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
 
         npm install -g prisma
 
-## Getting Started
+## Getting Started / General Instructions
 
 1. Clone/Download the Repository
 
@@ -38,13 +38,25 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
 
 3. Navigate to sub-projects and open terminal and run the command `npm install` to download all dependencies (_All packages present/added at main project directory are available to the sub-projects_)
 
-4. **e-commerce-app** - For e-commerce-app mini project, run the command `npm run test-live`, this will start the server; the localhost url will be displayed in the console on clicking which it will re-direct to the server
+## Projects
 
-5. **car-shop** - dummy project to list the best practices for defining GraphQL schemas, queries etc; no implementation to check
+1. **e-commerce-app** - mini project, containing examples for GraphQL schemas, queries, implementation to check on the live-server
 
-6. **blog-app** -
+2. **car-shop** - dummy project to list the best practices for defining GraphQL schemas, queries etc; no implementation to check
+
+3. **blog-app** - mini project, showcasing GraphQL integration with PostgreSQL hosted in Heroku Platform, utilising Prisma ORM
+
+4. **blog-app-frontend** - mini project, created on React platform, showcasing frontend integration with GraphQL backend(utilising **blog-app** project for backend portion)
 
 ## Instructions
+
+### e-commerce-app
+
+1. Navigate to the Project **e-commerce-app**
+
+2. Run the command `npm run start:dev` to start the live server
+
+3. Execute the GraphQL queries in the Live server
 
 ### blog-app
 
@@ -61,9 +73,17 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
 
 6. Run the command `npx prisma studio`, it will launch the studio in localhost, where user can see the models created using **schema.prisma**
 
+7. Run the command `npm run start:dev`, this will start the server; the localhost url will be displayed in the console on clicking which it will re-direct to the server
+
 ### blog-app-frontend
 
-1.
+1. Navigate to the Project **blog-app**, make sure the instructions mentioned above are completed
+
+2. Run the command `npm run start:dev` to start the live server and `npx prisma studio` to launch the studio in localhost (if not done)
+
+3. Navigate to the Project **blog-app-frontend**, run the command `npm start` to start the ReactJS project
+
+4. Navigate to the localhost instance opened up in the Browser, navigate to different URLs as specified in **_App.js_** to view the implementation
 
 ## Additional NPM Libraries Used
 
