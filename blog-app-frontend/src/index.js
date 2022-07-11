@@ -17,6 +17,7 @@ const httpLink = createHttpLink({
 });
 
 const authLink = setContext((_, { headers }) => {
+  //store token in Browser Dev console: application -> local storage, add key "token" and corresponding token
   const token = localStorage.getItem("token");
   return {
     headers: {
