@@ -19,6 +19,27 @@ const users = [
     email: "lipan.info@gmail.com",
   },
 ];
+//Demo Post Data
+const posts = [
+  {
+    id: 1,
+    title: "GraphQL course",
+    body: "course containing A-Z of GraphQL",
+    published: true,
+  },
+  {
+    id: 2,
+    title: "NodeJS",
+    body: "Become Backend Expert",
+    published: true,
+  },
+  {
+    id: 3,
+    title: "FSD",
+    body: "Rise and Shine - All In One",
+    published: false,
+  },
+];
 
 //Type Definitions
 const typeDefinitions = /* GraphQL */ `
@@ -26,15 +47,23 @@ const typeDefinitions = /* GraphQL */ `
     sum(numbers: [Float!]!): Float!
     greeting(name: String, message: String): String!
     users(query: String): [User!]!
+    posts(query: String): [Post!]!
     me: User!
     grades: [Int!]!
   }
 
   type User {
-    id: Int!
+    id: ID!
     name: String!
     email: String!
     age: Int
+  }
+
+  type Post {
+    id: ID!
+    title: String!
+    body: String!
+    published: Boolean!
   }
 `;
 
@@ -46,6 +75,16 @@ const resolvers = {
 
       return users.filter((user) => {
         return user.name.toLowerCase().includes(args.query.toLowerCase());
+      });
+    },
+    posts: (parent, args, context, info) => {
+      if (!args.query) return posts;
+
+      return posts.filter((post) => {
+        return (
+          post.title.toLowerCase().includes(args.query.toLowerCase()) ||
+          post.body.toLowerCase().includes(args.query.toLowerCase())
+        );
       });
     },
     sum: (parent, args, context, info) => {
