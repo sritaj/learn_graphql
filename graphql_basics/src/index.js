@@ -4,6 +4,15 @@ const typeDefinitions = /* GraphQL */ `
   type Query {
     sum(numbers: [Float!]!): Float!
     greeting(name: String, message: String): String!
+    me: User!
+  }
+
+  type User {
+    id: Int!
+    name: String!
+    isMarried: Boolean!
+    salary: Float!
+    tagline: String
   }
 `;
 
@@ -22,6 +31,14 @@ const resolvers = {
       } else {
         return "Hello";
       }
+    },
+    me: () => {
+      return {
+        id: 34523,
+        name: "Sritaj",
+        isMarried: false,
+        salary: 100100.9,
+      };
     },
   },
 };
