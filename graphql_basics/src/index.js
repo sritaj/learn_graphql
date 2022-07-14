@@ -3,6 +3,7 @@ import { createServer } from "@graphql-yoga/node";
 const typeDefinitions = /* GraphQL */ `
   type Query {
     sum(numbers: [Float!]!): Float!
+    greeting(name: String, message: String): String!
   }
 `;
 
@@ -14,6 +15,13 @@ const resolvers = {
       return args.numbers.reduce((accumulator, currentValue) => {
         return accumulator + currentValue;
       });
+    },
+    greeting: (parent, args, context, info) => {
+      if (args.name && args.message) {
+        return `Hi ${args.name}, have a ${args.message}`;
+      } else {
+        return "Hello";
+      }
     },
   },
 };
