@@ -1,9 +1,31 @@
 import { createServer } from "@graphql-yoga/node";
 
+//Demo User Data
+const users = [
+  {
+    id: 1,
+    name: "Sritaj",
+    email: "sritajp@gmail.com",
+  },
+  {
+    id: 2,
+    name: "SP",
+    email: "sritaj.info@gmail.com",
+    age: 32,
+  },
+  {
+    id: 2,
+    name: "Lipan",
+    email: "lipan.info@gmail.com",
+  },
+];
+
+//Type Definitions
 const typeDefinitions = /* GraphQL */ `
   type Query {
     sum(numbers: [Float!]!): Float!
     greeting(name: String, message: String): String!
+    users(query: String): [User!]!
     me: User!
     grades: [Int!]!
   }
@@ -11,14 +33,21 @@ const typeDefinitions = /* GraphQL */ `
   type User {
     id: Int!
     name: String!
-    isMarried: Boolean!
-    salary: Float!
-    tagline: String
+    email: String!
+    age: Int
   }
 `;
 
+//Resolvers
 const resolvers = {
   Query: {
+    users: (parent, args, context, info) => {
+      if (!args.query) return users;
+
+      return users.filter((user) => {
+        return user.name.toLowerCase().includes(args.query.toLowerCase());
+      });
+    },
     sum: (parent, args, context, info) => {
       if (args.numbers.length == 0) return 0;
 
@@ -37,8 +66,7 @@ const resolvers = {
       return {
         id: 34523,
         name: "Sritaj",
-        isMarried: false,
-        salary: 100100.9,
+        email: "sritajp@gmail.com",
       };
     },
     grades: () => {
