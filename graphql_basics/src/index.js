@@ -5,6 +5,7 @@ const typeDefinitions = /* GraphQL */ `
     sum(numbers: [Float!]!): Float!
     greeting(name: String, message: String): String!
     me: User!
+    grades: [Int!]!
   }
 
   type User {
@@ -39,6 +40,9 @@ const resolvers = {
         isMarried: false,
         salary: 100100.9,
       };
+    },
+    grades: () => {
+      return [90, 83, 92];
     },
   },
 };
