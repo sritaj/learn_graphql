@@ -14,7 +14,7 @@ const users = [
     age: 32,
   },
   {
-    id: 2,
+    id: 3,
     name: "Lipan",
     email: "lipan.info@gmail.com",
   },
@@ -26,18 +26,21 @@ const posts = [
     title: "GraphQL course",
     body: "course containing A-Z of GraphQL",
     published: true,
+    author: 1,
   },
   {
     id: 2,
     title: "NodeJS",
     body: "Become Backend Expert",
     published: true,
+    author: 2,
   },
   {
     id: 3,
     title: "FSD",
     body: "Rise and Shine - All In One",
     published: false,
+    author: 3,
   },
 ];
 
@@ -62,6 +65,7 @@ const typeDefinitions = /* GraphQL */ `
     title: String!
     body: String!
     published: Boolean!
+    author: User!
   }
 `;
 
@@ -99,6 +103,13 @@ const resolvers = {
         email: "sritaj.info@gmail.com",
         age: 32,
       };
+    },
+  },
+  Post: {
+    author: ({ author }, args, context, info) => {
+      return users.find((user) => {
+        return user.id === author;
+      });
     },
   },
 };
