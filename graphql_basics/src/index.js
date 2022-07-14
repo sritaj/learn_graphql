@@ -44,12 +44,10 @@ const posts = [
 //Type Definitions
 const typeDefinitions = /* GraphQL */ `
   type Query {
-    sum(numbers: [Float!]!): Float!
-    greeting(name: String, message: String): String!
     users(query: String): [User!]!
     posts(query: String): [Post!]!
     me: User!
-    grades: [Int!]!
+    post: Post!
   }
 
   type User {
@@ -87,20 +85,6 @@ const resolvers = {
         );
       });
     },
-    sum: (parent, args, context, info) => {
-      if (args.numbers.length == 0) return 0;
-
-      return args.numbers.reduce((accumulator, currentValue) => {
-        return accumulator + currentValue;
-      });
-    },
-    greeting: (parent, args, context, info) => {
-      if (args.name && args.message) {
-        return `Hi ${args.name}, have a ${args.message}`;
-      } else {
-        return "Hello";
-      }
-    },
     me: () => {
       return {
         id: 34523,
@@ -108,8 +92,13 @@ const resolvers = {
         email: "sritajp@gmail.com",
       };
     },
-    grades: () => {
-      return [90, 83, 92];
+    post: () => {
+      return {
+        id: 2,
+        name: "SP",
+        email: "sritaj.info@gmail.com",
+        age: 32,
+      };
     },
   },
 };
