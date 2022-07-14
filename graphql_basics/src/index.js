@@ -44,11 +44,32 @@ const posts = [
   },
 ];
 
+//Demo Comment Data
+const comments = [
+  {
+    id: 1,
+    text: "Comment 1",
+  },
+  {
+    id: 2,
+    text: "Comment 2",
+  },
+  {
+    id: 3,
+    text: "Comment 3",
+  },
+  {
+    id: 4,
+    text: "Comment 4",
+  },
+];
+
 //Type Definitions
 const typeDefinitions = /* GraphQL */ `
   type Query {
     users(query: String): [User!]!
     posts(query: String): [Post!]!
+    comments: [Comment!]!
     me: User!
     post: Post!
   }
@@ -58,6 +79,7 @@ const typeDefinitions = /* GraphQL */ `
     name: String!
     email: String!
     age: Int
+    posts: [Post!]!
   }
 
   type Post {
@@ -66,6 +88,11 @@ const typeDefinitions = /* GraphQL */ `
     body: String!
     published: Boolean!
     author: User!
+  }
+
+  type Comment {
+    id: ID!
+    text: String!
   }
 `;
 
@@ -89,6 +116,9 @@ const resolvers = {
         );
       });
     },
+    comments: (parent, args, context, info) => {
+      return comments;
+    },
     me: () => {
       return {
         id: 34523,
@@ -109,6 +139,13 @@ const resolvers = {
     author: ({ author }, args, context, info) => {
       return users.find((user) => {
         return user.id === author;
+      });
+    },
+  },
+  User: {
+    posts: (parent, args, context, info) => {
+      return posts.filter((post) => {
+        return post.author === parent.id;
       });
     },
   },
