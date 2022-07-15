@@ -1,4 +1,5 @@
 import { createServer } from "@graphql-yoga/node";
+import { v4 as uuidv4 } from "uuid";
 
 //Demo User Data
 const users = [
@@ -82,6 +83,10 @@ const typeDefinitions = /* GraphQL */ `
     post: Post!
   }
 
+  type Mutation {
+    createUser(name: String!, email: String!, age: Int): UserPayload!
+  }
+
   type User {
     id: ID!
     name: String!
@@ -105,6 +110,15 @@ const typeDefinitions = /* GraphQL */ `
     text: String!
     author: User!
     post: Post!
+  }
+
+  type UserPayload {
+    userErrors: [UserError!]!
+    user: User
+  }
+
+  type UserError {
+    message: String!
   }
 `;
 
@@ -140,11 +154,40 @@ const resolvers = {
     },
     post: () => {
       return {
-        id: 2,
-        name: "SP",
-        email: "sritaj.info@gmail.com",
-        age: 32,
+        id: 1,
+        title: "GraphQL course",
+        body: "course containing A-Z of GraphQL",
+        published: true,
       };
+    },
+  },
+  Mutation: {
+    createUser: (parent, args, context, info) => {
+      const emailTaken = users.some((user) => user.email === args.email);
+
+      if (emailTaken) {
+        return {
+          userErrors: [
+            {
+              message: "Email taken",
+            },
+          ],
+          user: null,
+        };
+      }
+
+      const { name, email, age } = args;
+
+      const newuser = {
+        id: uuidv4(),
+        name,
+        email,
+        age,
+      };
+
+      users.push(newuser);
+
+      return { userErrors: [], user: newuser };
     },
   },
   Post: {
