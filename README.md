@@ -13,12 +13,14 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
 5. TypeScript
 6. Heroku
 7. Prisma
+8. Apollo Server
+9. GraphQL Yoga
 
 ## Pre-Requisite
 
 1.  NPM
 
-2.  Nodemon - For automatically restarting the node application when file changes are detected
+2.  [Nodemon](https://www.npmjs.com/package/nodemon) - For automatically restarting the node application when file changes are detected
 
          npm install -g nodemon
 
@@ -26,7 +28,7 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
 
 4.  Create Account at [Heroku](https://dashboard.heroku.com/) - To host PostgreSQL in cloud Server and connect to the local App using **Prisma** for integration (required in "blog-app" project)
 
-5.  Prisma - ORM app to connect the Application with the Database and generating the models(db tables) and queries to retrieve info
+5.  [Prisma](https://www.npmjs.com/package/prisma) - ORM app to connect the Application with the Database and generating the models(db tables) and queries to retrieve info
 
         npm install -g prisma
 
