@@ -87,6 +87,7 @@ const typeDefinitions = /* GraphQL */ `
     createUser(data: CreateUserInput!): UserPayload!
     deleteUser(id: ID!): UserPayload!
     createPost(data: CreatePostInput!): PostPayLoad!
+    deletePost(id: ID!): PostPayLoad!
     createComment(data: CreateCommentInput!): CommentPayLoad!
   }
 
@@ -268,6 +269,28 @@ const resolvers = {
       posts.push(newPost);
 
       return { userErrors: [], post: newPost };
+    },
+    deletePost: (parent, args, context, info) => {
+      const postIndex = posts.findIndex((post) => post.id === args.id);
+
+      if (postIndex === -1) {
+        return {
+          userErrors: [
+            {
+              message: "Post not found",
+            },
+          ],
+          post: null,
+        };
+      }
+
+      const postDeleted = posts.splice(postIndex, 1);
+
+      comments = comments.filter((comment) => {
+        return comment.post !== args.id;
+      });
+
+      return { userErrors: [], post: postDeleted[0] };
     },
     createComment: (parent, args, context, info) => {
       const authorExist = users.some((user) => user.id === args.data.author);
