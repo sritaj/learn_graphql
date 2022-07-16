@@ -84,14 +84,28 @@ const typeDefinitions = /* GraphQL */ `
   }
 
   type Mutation {
-    createUser(name: String!, email: String!, age: Int): UserPayload!
-    createPost(
-      title: String!
-      body: String!
-      published: Boolean!
-      author: ID!
-    ): PostPayLoad!
-    createComment(text: String!, author: ID!, post: ID!): CommentPayLoad!
+    createUser(data: CreateUserInput!): UserPayload!
+    createPost(data: CreatePostInput!): PostPayLoad!
+    createComment(data: CreateCommentInput!): CommentPayLoad!
+  }
+
+  input CreateUserInput {
+    name: String!
+    email: String!
+    age: Int
+  }
+
+  input CreatePostInput {
+    title: String!
+    body: String!
+    published: Boolean!
+    author: ID!
+  }
+
+  input CreateCommentInput {
+    text: String!
+    author: ID!
+    post: ID!
   }
 
   type User {
@@ -180,7 +194,7 @@ const resolvers = {
   },
   Mutation: {
     createUser: (parent, args, context, info) => {
-      const emailTaken = users.some((user) => user.email === args.email);
+      const emailTaken = users.some((user) => user.email === args.data.email);
 
       if (emailTaken) {
         return {
@@ -195,7 +209,7 @@ const resolvers = {
 
       const newuser = {
         id: uuidv4(),
-        ...args,
+        ...args.data,
       };
 
       users.push(newuser);
@@ -203,7 +217,7 @@ const resolvers = {
       return { userErrors: [], user: newuser };
     },
     createPost: (parent, args, context, info) => {
-      const authorExist = users.some((user) => user.id === args.author);
+      const authorExist = users.some((user) => user.id === args.data.author);
 
       if (!authorExist) {
         return {
@@ -218,7 +232,7 @@ const resolvers = {
 
       const newPost = {
         id: uuidv4(),
-        ...args,
+        ...args.data,
       };
 
       posts.push(newPost);
@@ -226,7 +240,7 @@ const resolvers = {
       return { userErrors: [], post: newPost };
     },
     createComment: (parent, args, context, info) => {
-      const authorExist = users.some((user) => user.id === args.author);
+      const authorExist = users.some((user) => user.id === args.data.author);
 
       if (!authorExist) {
         return {
@@ -240,7 +254,7 @@ const resolvers = {
       }
 
       const postExist = posts.some((post) => {
-        return post.id === args.post && post.published;
+        return post.id === args.data.post && post.published;
       });
 
       if (!postExist) {
@@ -256,7 +270,7 @@ const resolvers = {
 
       const newComment = {
         id: uuidv4(),
-        ...args,
+        ...args.data,
       };
 
       comments.push(newComment);
