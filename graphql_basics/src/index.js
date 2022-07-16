@@ -89,6 +89,7 @@ const typeDefinitions = /* GraphQL */ `
     createPost(data: CreatePostInput!): PostPayLoad!
     deletePost(id: ID!): PostPayLoad!
     createComment(data: CreateCommentInput!): CommentPayLoad!
+    deleteComment(id: ID!): CommentPayLoad!
   }
 
   input CreateUserInput {
@@ -331,6 +332,29 @@ const resolvers = {
       return {
         userErrors: [],
         comment: newComment,
+      };
+    },
+    deleteComment: (parent, args, context, info) => {
+      const commentIndex = comments.findIndex(
+        (comment) => comment.id === args.id
+      );
+
+      if (commentIndex === -1) {
+        return {
+          userErrors: [
+            {
+              message: "Comment not found",
+            },
+          ],
+          comment: null,
+        };
+      }
+
+      const commentDeleted = comments.splice(commentIndex, 1);
+
+      return {
+        userErrors: [],
+        comment: commentDeleted[0],
       };
     },
   },
