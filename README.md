@@ -108,6 +108,14 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
 
                npm install --save dataloader
 
+5.  [Babel](https://babeljs.io/) - Babel libraries for supporting modern JS features in older browser versions
+
+               npm install --save-dev @babel/cli
+               npm install --save-dev @babel/core
+               npm install --save-dev @babel/node
+               npm install --save-dev @babel/preset-env
+               npm install --save-dev babel-plugin-transform-object-rest-spread
+
 ## Special Thanks
 
 Special Thanks to Instructors, online communities and official documentation which has done splendid job on explaining the concepts
