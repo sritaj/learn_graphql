@@ -85,6 +85,12 @@ const typeDefinitions = /* GraphQL */ `
 
   type Mutation {
     createUser(name: String!, email: String!, age: Int): UserPayload!
+    createPost(
+      title: String!
+      body: String!
+      published: Boolean!
+      author: ID!
+    ): PostPayLoad!
   }
 
   type User {
@@ -119,6 +125,11 @@ const typeDefinitions = /* GraphQL */ `
 
   type UserError {
     message: String!
+  }
+
+  type PostPayLoad {
+    userErrors: [UserError!]!
+    post: Post
   }
 `;
 
@@ -188,6 +199,34 @@ const resolvers = {
       users.push(newuser);
 
       return { userErrors: [], user: newuser };
+    },
+    createPost: (parent, args, context, info) => {
+      const authorExist = users.some((user) => user.id === args.author);
+
+      if (!authorExist) {
+        return {
+          userErrors: [
+            {
+              message: "Author not found",
+            },
+          ],
+          post: null,
+        };
+      }
+
+      const { title, body, published, author } = args;
+
+      const newPost = {
+        id: uuidv4(),
+        title,
+        body,
+        published,
+        author,
+      };
+
+      posts.push(newPost);
+
+      return { userErrors: [], post: newPost };
     },
   },
   Post: {
