@@ -4,18 +4,18 @@ import { v4 as uuidv4 } from "uuid";
 //Demo User Data
 const users = [
   {
-    id: 1,
+    id: "1",
     name: "Sritaj",
     email: "sritajp@gmail.com",
   },
   {
-    id: 2,
+    id: "2",
     name: "SP",
     email: "sritaj.info@gmail.com",
     age: 32,
   },
   {
-    id: 3,
+    id: "3",
     name: "Lipan",
     email: "lipan.info@gmail.com",
   },
@@ -23,53 +23,53 @@ const users = [
 //Demo Post Data
 const posts = [
   {
-    id: 1,
+    id: "1",
     title: "GraphQL course",
     body: "course containing A-Z of GraphQL",
     published: true,
-    author: 1,
+    author: "1",
   },
   {
-    id: 2,
+    id: "2",
     title: "NodeJS",
     body: "Become Backend Expert",
     published: true,
-    author: 2,
+    author: "2",
   },
   {
-    id: 3,
+    id: "3",
     title: "FSD",
     body: "Rise and Shine - All In One",
     published: false,
-    author: 3,
+    author: "3",
   },
 ];
 
 //Demo Comment Data
 const comments = [
   {
-    id: 1,
+    id: "1",
     text: "Comment 1",
-    author: 1,
-    post: 1,
+    author: "1",
+    post: "1",
   },
   {
-    id: 2,
+    id: "2",
     text: "Comment 2",
-    author: 2,
-    post: 2,
+    author: "2",
+    post: "2",
   },
   {
-    id: 3,
+    id: "3",
     text: "Comment 3",
-    author: 2,
-    post: 2,
+    author: "2",
+    post: "2",
   },
   {
-    id: 4,
+    id: "4",
     text: "Comment 4",
-    author: 3,
-    post: 3,
+    author: "3",
+    post: "3",
   },
 ];
 
@@ -91,6 +91,7 @@ const typeDefinitions = /* GraphQL */ `
       published: Boolean!
       author: ID!
     ): PostPayLoad!
+    createComment(text: String!, author: ID!, post: ID!): CommentPayLoad!
   }
 
   type User {
@@ -130,6 +131,11 @@ const typeDefinitions = /* GraphQL */ `
   type PostPayLoad {
     userErrors: [UserError!]!
     post: Post
+  }
+
+  type CommentPayLoad {
+    userErrors: [UserError!]!
+    comment: Comment
   }
 `;
 
@@ -227,6 +233,51 @@ const resolvers = {
       posts.push(newPost);
 
       return { userErrors: [], post: newPost };
+    },
+    createComment: (parent, args, context, info) => {
+      const authorExist = users.some((user) => user.id === args.author);
+
+      if (!authorExist) {
+        return {
+          userErrors: [
+            {
+              message: "Author not found",
+            },
+          ],
+          comment: null,
+        };
+      }
+
+      const postExist = posts.some((post) => {
+        return post.id === args.post && post.published;
+      });
+
+      if (!postExist) {
+        return {
+          userErrors: [
+            {
+              message: "Post not found",
+            },
+          ],
+          comment: null,
+        };
+      }
+
+      const { text, author, post } = args;
+
+      const newComment = {
+        id: uuidv4(),
+        text,
+        author,
+        post,
+      };
+
+      comments.push(newComment);
+
+      return {
+        userErrors: [],
+        comment: newComment,
+      };
     },
   },
   Post: {
