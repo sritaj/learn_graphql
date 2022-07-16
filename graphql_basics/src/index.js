@@ -193,13 +193,9 @@ const resolvers = {
         };
       }
 
-      const { name, email, age } = args;
-
       const newuser = {
         id: uuidv4(),
-        name,
-        email,
-        age,
+        ...args,
       };
 
       users.push(newuser);
@@ -220,14 +216,9 @@ const resolvers = {
         };
       }
 
-      const { title, body, published, author } = args;
-
       const newPost = {
         id: uuidv4(),
-        title,
-        body,
-        published,
-        author,
+        ...args,
       };
 
       posts.push(newPost);
@@ -263,13 +254,9 @@ const resolvers = {
         };
       }
 
-      const { text, author, post } = args;
-
       const newComment = {
         id: uuidv4(),
-        text,
-        author,
-        post,
+        ...args,
       };
 
       comments.push(newComment);
