@@ -41,7 +41,6 @@ let posts = [
     author: "3",
   },
 ];
-
 //Demo Comment Data
 let comments = [
   {
@@ -71,9 +70,9 @@ let comments = [
 ];
 
 const db = {
-  users: users,
-  posts: posts,
-  comments: comments,
+  users,
+  posts,
+  comments,
 };
 
 export { db as default };
