@@ -16,6 +16,11 @@ const typeDefinitions = /* GraphQL */ `
     updatePost(id: ID!, author: ID!, data: UpdatePostInput!): PostPayLoad!
     createComment(data: CreateCommentInput!): CommentPayLoad!
     deleteComment(id: ID!): CommentPayLoad!
+    updateComment(
+      id: ID!
+      author: ID!
+      data: UpdateCommentInput!
+    ): CommentPayLoad!
   }
 
   input CreateUserInput {
@@ -47,6 +52,10 @@ const typeDefinitions = /* GraphQL */ `
     text: String!
     author: ID!
     post: ID!
+  }
+
+  input UpdateCommentInput {
+    text: String!
   }
 
   type User {

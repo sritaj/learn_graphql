@@ -242,6 +242,41 @@ const Mutation = {
       comment: commentDeleted[0],
     };
   },
+  updateComment: (parent, args, { db }, info) => {
+    const comment = db.comments.find((comment) => comment.id === args.id);
+
+    if (!comment) {
+      return {
+        userErrors: [
+          {
+            message: "Comment not found",
+          },
+        ],
+        comment: null,
+      };
+    }
+
+    const author = db.comments.find(
+      (comment) => comment.author === args.author
+    );
+
+    if (!author) {
+      return {
+        userErrors: [
+          {
+            message: "Comment belongs to different user",
+          },
+        ],
+        comment: null,
+      };
+    }
+
+    if (typeof args.data.text === "string") {
+      comment.text = args.data.text;
+    }
+
+    return { userErrors: [], comment: comment };
+  },
 };
 
 export { Mutation as default };
