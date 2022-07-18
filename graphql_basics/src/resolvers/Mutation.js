@@ -137,6 +137,47 @@ const Mutation = {
 
     return { userErrors: [], post: postDeleted[0] };
   },
+  updatePost: (parent, args, { db }, info) => {
+    const post = db.posts.find((post) => post.id === args.id);
+
+    if (!post) {
+      return {
+        userErrors: [
+          {
+            message: "Post not found",
+          },
+        ],
+        post: null,
+      };
+    }
+
+    const author = db.posts.find((post) => post.author === args.author);
+
+    if (!author) {
+      return {
+        userErrors: [
+          {
+            message: "Post belongs to different Author",
+          },
+        ],
+        post: null,
+      };
+    }
+
+    if (typeof args.data.title === "string") {
+      post.title = args.data.title;
+    }
+
+    if (typeof args.data.body === "string") {
+      post.body = args.data.body;
+    }
+
+    if (typeof args.data.published === "boolean") {
+      post.published = args.data.published;
+    }
+
+    return { userErrors: [], post: post };
+  },
   createComment: (parent, args, { db }, info) => {
     const authorExist = db.users.some((user) => user.id === args.data.author);
 

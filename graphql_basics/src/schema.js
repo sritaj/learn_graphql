@@ -13,6 +13,7 @@ const typeDefinitions = /* GraphQL */ `
     updateUser(id: ID!, data: UpdateUserInput!): UserPayload!
     createPost(data: CreatePostInput!): PostPayLoad!
     deletePost(id: ID!): PostPayLoad!
+    updatePost(id: ID!, author: ID!, data: UpdatePostInput!): PostPayLoad!
     createComment(data: CreateCommentInput!): CommentPayLoad!
     deleteComment(id: ID!): CommentPayLoad!
   }
@@ -34,6 +35,12 @@ const typeDefinitions = /* GraphQL */ `
     body: String!
     published: Boolean!
     author: ID!
+  }
+
+  input UpdatePostInput {
+    title: String
+    body: String
+    published: Boolean
   }
 
   input CreateCommentInput {
