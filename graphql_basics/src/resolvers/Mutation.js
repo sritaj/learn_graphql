@@ -53,6 +53,45 @@ const Mutation = {
 
     return { userErrors: [], user: deletedUser[0] };
   },
+  updateUser: (parent, args, { db }, info) => {
+    const user = db.users.find((user) => user.id === args.id);
+
+    if (!user) {
+      return {
+        userErrors: [{ message: "User not found" }],
+        user: null,
+      };
+    }
+
+    if (typeof args.data.email === "string") {
+      const emailTaken = db.users.some(
+        (user) => user.email === args.data.email
+      );
+
+      if (emailTaken) {
+        return {
+          userErrors: [
+            {
+              message: "Email taken",
+            },
+          ],
+          user: null,
+        };
+      }
+
+      user.email = args.data.email;
+    }
+
+    if (typeof args.data.name === "string") {
+      user.name = args.data.name;
+    }
+
+    if (typeof args.data.age !== "undefined") {
+      user.age = args.data.age;
+    }
+
+    return { userErrors: [], user: user };
+  },
   createPost: (parent, args, { db }, info) => {
     const authorExist = db.users.some((user) => user.id === args.data.author);
 

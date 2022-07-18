@@ -10,6 +10,7 @@ const typeDefinitions = /* GraphQL */ `
   type Mutation {
     createUser(data: CreateUserInput!): UserPayload!
     deleteUser(id: ID!): UserPayload!
+    updateUser(id: ID!, data: UpdateUserInput!): UserPayload!
     createPost(data: CreatePostInput!): PostPayLoad!
     deletePost(id: ID!): PostPayLoad!
     createComment(data: CreateCommentInput!): CommentPayLoad!
@@ -19,6 +20,12 @@ const typeDefinitions = /* GraphQL */ `
   input CreateUserInput {
     name: String!
     email: String!
+    age: Int
+  }
+
+  input UpdateUserInput {
+    name: String
+    email: String
     age: Int
   }
 
