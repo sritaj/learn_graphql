@@ -11,8 +11,8 @@ const server = createServer({
   schema: {
     typeDefs: typeDefinitions,
     resolvers: { Query, Mutation, Post, User, Comment },
-    context: { db },
   },
+  context: { db },
 });
 
 server.start(() => {
