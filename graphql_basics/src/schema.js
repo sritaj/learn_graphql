@@ -25,7 +25,7 @@ const typeDefinitions = /* GraphQL */ `
 
   type Subscription {
     comment(postId: ID!): Comment!
-    post: Post!
+    post: PostSubscriptionPayload!
   }
 
   input CreateUserInput {
@@ -105,6 +105,11 @@ const typeDefinitions = /* GraphQL */ `
   type CommentPayLoad {
     userErrors: [UserError!]!
     comment: Comment
+  }
+
+  type PostSubscriptionPayload {
+    mutation: String
+    data: Post!
   }
 `;
 
