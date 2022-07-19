@@ -23,6 +23,10 @@ const typeDefinitions = /* GraphQL */ `
     ): CommentPayLoad!
   }
 
+  type Subscription {
+    comment(postId: ID!): Comment!
+  }
+
   input CreateUserInput {
     name: String!
     email: String!
