@@ -115,7 +115,6 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
                npm install --save-dev @babel/node
                npm install --save-dev @babel/preset-env
                npm install --save-dev babel-plugin-transform-object-rest-spread
-               npm install babel-plugin-transform-remove-console --save-dev
 
 ## Special Thanks
 

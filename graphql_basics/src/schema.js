@@ -25,6 +25,7 @@ const typeDefinitions = /* GraphQL */ `
 
   type Subscription {
     comment(postId: ID!): Comment!
+    post: Post!
   }
 
   input CreateUserInput {
