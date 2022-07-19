@@ -119,7 +119,7 @@ const Mutation = {
 
     return { userErrors: [], post: newPost };
   },
-  deletePost: (parent, args, { db }, info) => {
+  deletePost: (parent, args, { db, pubSub }, info) => {
     const postIndex = db.posts.findIndex((post) => post.id === args.id);
 
     if (postIndex === -1) {
@@ -133,13 +133,21 @@ const Mutation = {
       };
     }
 
-    const postDeleted = db.posts.splice(postIndex, 1);
+    const [postDeleted] = db.posts.splice(postIndex, 1);
 
-    comments = db.comments.filter((comment) => {
+    console.log(postDeleted);
+
+    db.comments = db.comments.filter((comment) => {
       return comment.post !== args.id;
     });
 
-    return { userErrors: [], post: postDeleted[0] };
+    if (postDeleted.published) {
+      pubSub.publish(`post`, {
+        post: { mutation: "DELETED", data: postDeleted },
+      });
+    }
+
+    return { userErrors: [], post: postDeleted };
   },
   updatePost: (parent, args, { db }, info) => {
     const post = db.posts.find((post) => post.id === args.id);
