@@ -241,14 +241,16 @@ const Mutation = {
 
     db.comments.push(newComment);
 
-    pubSub.publish(`comment ${args.data.post}`, { comment: newComment });
+    pubSub.publish(`comment ${args.data.post}`, {
+      comment: { mutation: "CREATED", data: newComment },
+    });
 
     return {
       userErrors: [],
       comment: newComment,
     };
   },
-  deleteComment: (parent, args, { db }, info) => {
+  deleteComment: (parent, args, { db, pubSub }, info) => {
     const commentIndex = db.comments.findIndex(
       (comment) => comment.id === args.id
     );
@@ -264,14 +266,18 @@ const Mutation = {
       };
     }
 
-    const commentDeleted = db.comments.splice(commentIndex, 1);
+    const [commentDeleted] = db.comments.splice(commentIndex, 1);
+
+    pubSub.publish(`comment ${commentDeleted.post}`, {
+      comment: { mutation: "DELETED", data: commentDeleted },
+    });
 
     return {
       userErrors: [],
-      comment: commentDeleted[0],
+      comment: commentDeleted,
     };
   },
-  updateComment: (parent, args, { db }, info) => {
+  updateComment: (parent, args, { db, pubSub }, info) => {
     const comment = db.comments.find((comment) => comment.id === args.id);
 
     if (!comment) {
@@ -284,6 +290,9 @@ const Mutation = {
         comment: null,
       };
     }
+
+    const post = db.posts.find((post) => post.id === comment.post);
+    const { id } = post;
 
     const author = db.comments.find(
       (comment) => comment.author === args.author
@@ -303,6 +312,10 @@ const Mutation = {
     if (typeof args.data.text === "string") {
       comment.text = args.data.text;
     }
+
+    pubSub.publish(`comment ${id}`, {
+      comment: { mutation: "UPDATED", data: comment },
+    });
 
     return { userErrors: [], comment: comment };
   },
