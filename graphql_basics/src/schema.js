@@ -107,13 +107,19 @@ const typeDefinitions = /* GraphQL */ `
     comment: Comment
   }
 
+  enum MutationType {
+    CREATED
+    UPDATED
+    DELETED
+  }
+
   type PostSubscriptionPayload {
-    mutation: String
+    mutation: MutationType!
     data: Post!
   }
 
   type CommentSubscriptionPayload {
-    mutation: String
+    mutation: MutationType!
     data: Comment!
   }
 `;
