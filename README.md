@@ -26,7 +26,7 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
 
 3.  Create Account at [ApolloGrapgQL](https://studio.apollographql.com/login?from=%2F) - To execute the Queries (required in all projects)
 
-4.  Create Account at [Heroku](https://dashboard.heroku.com/) - To host PostgreSQL in cloud Server and connect to the local App using **Prisma** for integration (required in "blog-app" project)
+4.  Create Account at [Heroku](https://dashboard.heroku.com/) - To host PostgreSQL in cloud Server and connect to the local App using **Prisma** for integration (required in "blog-app" and "graphql_basics" project)
 
 5.  [Prisma](https://www.npmjs.com/package/prisma) - ORM app to connect the Application with the Database and generating the models(db tables) and queries to retrieve info
 
@@ -49,6 +49,8 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
 3. **blog-app** - mini project, showcasing GraphQL integration with PostgreSQL hosted in Heroku Platform, utilising Prisma ORM
 
 4. **blog-app-frontend** - mini project, created on React platform, showcasing frontend integration with GraphQL backend(utilising **blog-app** project for backend portion)
+
+5. **graphql_basics**
 
 ## Instructions
 
@@ -87,6 +89,12 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
 
 4. Navigate to the localhost instance opened up in the Browser, navigate to different URLs as specified in **_App.js_** to view the implementation
 
+### graphql_basics
+
+1. Follow steps 1 - 6 as specified for **blog-app** project
+
+2. Run the command `npm run start`, this will start the server; the localhost url will be displayed in the console on clicking which it will re-direct to the server
+
 ## Additional NPM Libraries Used
 
 1.  [Validator](https://www.npmjs.com/package/validator) - For validating Email, Password and relevant fields (instead of using Regex, checking length etc)
@@ -115,6 +123,11 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
                npm install --save-dev @babel/node
                npm install --save-dev @babel/preset-env
                npm install --save-dev babel-plugin-transform-object-rest-spread
+
+6.  [Prisma](https://www.prisma.io/) - Prisma specific packages
+
+               npm install prisma --save-dev
+               npm install @prisma/client
 
 ## Special Thanks
 
