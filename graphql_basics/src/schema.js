@@ -21,12 +21,18 @@ const typeDefinitions = /* GraphQL */ `
     updatePost(id: ID!, author: ID!, data: UpdatePostInput!): PostPayLoad!
     updatePostPrisma(id: ID!, author: ID!, data: UpdatePostInput!): Post!
     createComment(data: CreateCommentInput!): CommentPayLoad!
+    createCommentPrisma(data: CreateCommentInput!): Comment!
     deleteComment(id: ID!): CommentPayLoad!
     updateComment(
       id: ID!
       author: ID!
       data: UpdateCommentInput!
     ): CommentPayLoad!
+    updateCommentPrisma(
+      id: ID!
+      author: ID!
+      data: UpdateCommentInput!
+    ): Comment!
   }
 
   type Subscription {

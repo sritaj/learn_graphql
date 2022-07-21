@@ -452,6 +452,78 @@ const Mutation = {
 
     return updatedPost;
   },
+  createCommentPrisma: async (parent, args, { prisma }, info) => {
+    const { text, author, post } = args.data;
+
+    const postExist = await prisma.posts.findUnique({
+      where: {
+        id: Number(post),
+      },
+    });
+
+    if (!postExist) {
+      throw new GraphQLYogaError("Post is not available");
+    }
+
+    const userExist = await prisma.users.findUnique({
+      where: {
+        id: Number(author),
+      },
+    });
+
+    if (!userExist) {
+      throw new GraphQLYogaError("User is not available");
+    }
+
+    const comment = await prisma.comments.create({
+      data: {
+        text,
+        authorID: Number(author),
+        postID: Number(post),
+      },
+    });
+
+    return comment;
+  },
+  updateCommentPrisma: async (parent, args, { prisma }, info) => {
+    const { id, author } = args;
+    const { text } = args.data;
+
+    const commentExist = await prisma.comments.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!commentExist) {
+      throw new GraphQLYogaError("Comment is not available");
+    }
+
+    const correctAuthor = await prisma.comments.findMany({
+      where: {
+        AND: [{ authorID: Number(author), id: Number(id) }],
+      },
+    });
+
+    console.log(correctAuthor);
+
+    if (correctAuthor.length === 0) {
+      throw new GraphQLYogaError(
+        "Current User is not the owner of the comment"
+      );
+    }
+
+    const updatedComment = await prisma.comments.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        text,
+      },
+    });
+
+    return updatedComment;
+  },
 };
 
 export { Mutation as default };
