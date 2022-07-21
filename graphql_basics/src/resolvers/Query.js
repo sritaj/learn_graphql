@@ -61,6 +61,9 @@ const Query = {
       },
     });
   },
+  commentsPrisma: async (parent, args, { prisma }, info) => {
+    return await prisma.comments.findMany();
+  },
 };
 
 export { Query as default };

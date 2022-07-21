@@ -5,6 +5,7 @@ const typeDefinitions = /* GraphQL */ `
     posts(query: String): [Post!]!
     postsPrisma(query: String): [Post!]!
     comments: [Comment!]!
+    commentsPrisma: [Comment!]!
     me: User!
     post: Post!
   }
