@@ -1,3 +1,5 @@
+import { prisma } from "..";
+
 const Query = {
   users: (parent, args, { db }, info) => {
     if (!args.query) return db.users;
@@ -33,6 +35,19 @@ const Query = {
       body: "course containing A-Z of GraphQL",
       published: true,
     };
+  },
+  //Query for Prisma
+  usersPrisma: async (parent, args, { db }, info) => {
+    if (!args.query) return await prisma.users.findMany();
+
+    return await prisma.users.findMany({
+      where: {
+        name: {
+          startsWith: args.query,
+          mode: "insensitive",
+        },
+      },
+    });
   },
 };
 
