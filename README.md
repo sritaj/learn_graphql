@@ -9,12 +9,11 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
 1. JavaScript
 2. NodeJS
 3. GraphQL
-4. PostgreSQL
+4. PostgreSQL(Heroku)
 5. TypeScript
-6. Heroku
-7. Prisma
-8. Apollo Server
-9. GraphQL Yoga
+6. Prisma
+7. Apollo Server
+8. GraphQL Yoga
 
 ## Pre-Requisite
 
@@ -42,7 +41,7 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
 
 ## Projects
 
-1. **e-commerce-app** - mini project, containing examples for GraphQL schemas, queries, implementation to check on the live-server
+1. **e-commerce-app** - mini project, containing examples for GraphQL schemas, queries, implementation to check on the apollo live-server
 
 2. **car-shop** - dummy project to list the best practices for defining GraphQL schemas, queries etc; no implementation to check
 
@@ -50,7 +49,7 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
 
 4. **blog-app-frontend** - mini project, created on React platform, showcasing frontend integration with GraphQL backend(utilising **blog-app** project for backend portion)
 
-5. **graphql_basics**
+5. **graphql_basics** - mini project, containing examples for GraphQL schemas, queries, implementation to check on the graphql yoga server, showcasing GraphQL integration with PostgreSQL hosted in Heroku Platform, utilising Prisma ORM
 
 ## Instructions
 
@@ -73,9 +72,9 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
 
 4. Go to the Project **blog-app**, create .env file at root-level, and define the "DATABASE_URL", ex: `DATABASE_URL="postgres://acnpigodzgxyyy:8.....`, the URI is the one copied in above step
 
-5. Open the terminal and run the command `npx prisma db push`, it will show the success message _🚀 Your database is now in sync with your Prisma schema._ and the Prisma Client will be generated
+5. Open the terminal and run the command `npx prisma db push`, it will show the success message _🚀 Your database is now in sync with your Prisma schema._ and the Prisma Client will be generated [Check additional info for PRISMA DB connection](https://www.prisma.io/docs/concepts/components/prisma-client)
 
-6. Run the command `npx prisma studio`, it will launch the studio in localhost, where user can see the models created using **schema.prisma**
+6. Run the command `npx prisma studio`, it will launch the studio in localhost, where user can see the models created using **schema.prisma** and for operating any CRUD operations
 
 7. Run the command `npm run start:dev`, this will start the server; the localhost url will be displayed in the console on clicking which it will re-direct to the server
 
@@ -129,8 +128,13 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
                npm install prisma --save-dev
                npm install @prisma/client
 
+## Not Included/Implemented
+
+1. Examples showcasing DB connection in local machine with GraphQL backend and PRISMA ORM (PostgreSQL setup for mini-projects is done at [Heroku](https://dashboard.heroku.com/))
+
 ## Special Thanks
 
 Special Thanks to Instructors, online communities and official documentation which has done splendid job on explaining the concepts
 
 - [Laith Harb](https://www.udemy.com/course/modern-graphql-complete-guide/)
+- [Andrew Mead](https://www.udemy.com/course/graphql-bootcamp/)
