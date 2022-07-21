@@ -1,7 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
+import { GraphQLYogaError } from "@graphql-yoga/node";
 
 const Mutation = {
-  createUser: (parent, args, { db }, info) => {
+  createUser: async (parent, args, { db, prisma }, info) => {
     const emailTaken = db.users.some((user) => user.email === args.data.email);
 
     if (emailTaken) {
@@ -19,8 +20,19 @@ const Mutation = {
       id: uuidv4(),
       ...args.data,
     };
+    const prismaEntry = {
+      ...args.data,
+    };
 
     db.users.push(newuser);
+
+    await prisma.users.create({
+      data: {
+        name: args.data.name,
+        email: args.data.email,
+        age: args.data.age,
+      },
+    });
 
     return { userErrors: [], user: newuser };
   },
@@ -318,6 +330,31 @@ const Mutation = {
     });
 
     return { userErrors: [], comment: comment };
+  },
+  //Mutations for Prisma
+  createUserPrisma: async (parent, args, { prisma }, info) => {
+    const { name, email, age } = args.data;
+
+    const emailTaken = await prisma.users.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    console.log(emailTaken);
+    if (emailTaken) {
+      throw new GraphQLYogaError("Email taken");
+    }
+
+    const createdUser = await prisma.users.create({
+      data: {
+        name,
+        email,
+        age,
+      },
+    });
+
+    return createdUser;
   },
 };
 
