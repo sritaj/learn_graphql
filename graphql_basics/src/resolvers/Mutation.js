@@ -412,6 +412,46 @@ const Mutation = {
 
     return createdPost;
   },
+  updatePostPrisma: async (parent, args, { prisma }, info) => {
+    const { id, author } = args;
+    const { title, body, published } = args.data;
+
+    const postExist = await prisma.posts.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!postExist) {
+      throw new GraphQLYogaError("Post is not available");
+    }
+
+    const correctAuthor = await prisma.users.findUnique({
+      where: {
+        id: Number(author),
+      },
+      include: {
+        posts: id,
+      },
+    });
+
+    if (!correctAuthor) {
+      throw new GraphQLYogaError("Current User is not the owner of the post");
+    }
+
+    const updatedPost = await prisma.posts.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        title,
+        body,
+        published,
+      },
+    });
+
+    return updatedPost;
+  },
 };
 
 export { Mutation as default };
