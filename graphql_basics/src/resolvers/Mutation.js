@@ -390,6 +390,28 @@ const Mutation = {
 
     return updatedUser;
   },
+  createPostPrisma: async (parent, args, { prisma }, info) => {
+    const { title, body, published, author } = args.data;
+
+    const userExist = await prisma.users.findUnique({
+      where: { id: Number(author) },
+    });
+
+    if (!userExist) {
+      throw new GraphQLYogaError("User not found");
+    }
+
+    const createdPost = await prisma.posts.create({
+      data: {
+        title,
+        body,
+        published,
+        authorID: Number(author),
+      },
+    });
+
+    return createdPost;
+  },
 };
 
 export { Mutation as default };

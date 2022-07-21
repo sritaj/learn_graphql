@@ -37,12 +37,24 @@ const Query = {
     };
   },
   //Query for Prisma
-  usersPrisma: async (parent, args, { db }, info) => {
+  usersPrisma: async (parent, args, { prisma }, info) => {
     if (!args.query) return await prisma.users.findMany();
 
     return await prisma.users.findMany({
       where: {
         name: {
+          startsWith: args.query,
+          mode: "insensitive",
+        },
+      },
+    });
+  },
+  postsPrisma: async (parent, args, { prisma }, info) => {
+    if (!args.query) return await prisma.posts.findMany();
+
+    return await prisma.posts.findMany({
+      where: {
+        title: {
           startsWith: args.query,
           mode: "insensitive",
         },

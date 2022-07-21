@@ -3,6 +3,7 @@ const typeDefinitions = /* GraphQL */ `
     users(query: String): [User!]!
     usersPrisma(query: String): [User!]!
     posts(query: String): [Post!]!
+    postsPrisma(query: String): [Post!]!
     comments: [Comment!]!
     me: User!
     post: Post!
@@ -15,6 +16,7 @@ const typeDefinitions = /* GraphQL */ `
     updateUser(id: ID!, data: UpdateUserInput!): UserPayload!
     updateUserPrisma(id: ID!, data: UpdateUserInput!): User!
     createPost(data: CreatePostInput!): PostPayLoad!
+    createPostPrisma(data: CreatePostInput!): Post!
     deletePost(id: ID!): PostPayLoad!
     updatePost(id: ID!, author: ID!, data: UpdatePostInput!): PostPayLoad!
     createComment(data: CreateCommentInput!): CommentPayLoad!
