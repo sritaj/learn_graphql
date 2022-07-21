@@ -23,19 +23,19 @@ model Users {
 
 model Posts {
   id        Int      @id @default(autoincrement())
-  title String
-    body String 
-    published Boolean
-    authorID Int 
-    author Users @relation(fields: [authorID], references: [id])
-    comments Comments[] 
+  title     String
+  body      String 
+  published Boolean
+  authorID  Int 
+  author    Users @relation(fields: [authorID], references: [id], onDelete: Cascade)
+  comments  Comments[] 
 }
 
 model Comments {
   id        Int      @id @default(autoincrement())
-   text String
-   authorID Int
-   postID Int
-    author Users @relation(fields: [authorID], references: [id])
-    post Posts @relation(fields: [postID], references: [id])
+  text      String
+  authorID  Int
+  postID    Int
+  author    Users @relation(fields: [authorID], references: [id], onDelete: Cascade)
+  post      Posts @relation(fields: [postID], references: [id], onDelete: Cascade)
 }
