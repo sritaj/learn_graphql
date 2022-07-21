@@ -426,16 +426,14 @@ const Mutation = {
       throw new GraphQLYogaError("Post is not available");
     }
 
-    const correctAuthor = await prisma.users.findUnique({
+    const correctAuthor = await prisma.posts.findMany({
       where: {
-        id: Number(author),
-      },
-      include: {
-        posts: id,
+        AND: [{ authorID: Number(author), id: Number(id) }],
       },
     });
 
-    if (!correctAuthor) {
+    console.log(correctAuthor);
+    if (correctAuthor.length === 0) {
       throw new GraphQLYogaError("Current User is not the owner of the post");
     }
 
@@ -504,8 +502,6 @@ const Mutation = {
         AND: [{ authorID: Number(author), id: Number(id) }],
       },
     });
-
-    console.log(correctAuthor);
 
     if (correctAuthor.length === 0) {
       throw new GraphQLYogaError(
