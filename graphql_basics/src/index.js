@@ -16,7 +16,14 @@ const pubSub = createPubSub();
 const server = createServer({
   schema: {
     typeDefs: typeDefinitions,
-    resolvers: { Query, Mutation, Subscription, Post, User, Comment },
+    resolvers: {
+      Query,
+      Mutation,
+      Subscription,
+      Post,
+      User,
+      Comment,
+    },
     Subscription: {},
   },
   context: { db, pubSub, prisma },
