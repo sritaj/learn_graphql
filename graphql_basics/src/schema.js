@@ -9,6 +9,7 @@ const typeDefinitions = /* GraphQL */ `
 
   type Mutation {
     createUser(data: CreateUserInput!): UserPayload!
+    createUserPrisma(data: CreateUserInput!): User!
     deleteUser(id: ID!): UserPayload!
     updateUser(id: ID!, data: UpdateUserInput!): UserPayload!
     createPost(data: CreatePostInput!): PostPayLoad!
