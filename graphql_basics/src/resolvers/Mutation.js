@@ -341,7 +341,6 @@ const Mutation = {
       },
     });
 
-    console.log(emailTaken);
     if (emailTaken) {
       throw new GraphQLYogaError("Email taken");
     }
@@ -355,6 +354,41 @@ const Mutation = {
     });
 
     return createdUser;
+  },
+  updateUserPrisma: async (parent, args, { prisma }, info) => {
+    const { id } = args;
+    const { name, email, age } = args.data;
+
+    const userExist = await prisma.users.findUnique({
+      where: { id: Number(id) },
+    });
+
+    if (!userExist) {
+      throw new GraphQLYogaError("User not found");
+    }
+
+    const emailTaken = await prisma.users.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (emailTaken) {
+      throw new GraphQLYogaError("Email taken");
+    }
+
+    const updatedUser = await prisma.users.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        name,
+        email,
+        age,
+      },
+    });
+
+    return updatedUser;
   },
 };
 
