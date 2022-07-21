@@ -520,6 +520,25 @@ const Mutation = {
 
     return updatedComment;
   },
+  deleteCommentPrisma: async (parent, args, { prisma }, info) => {
+    const { id } = args;
+
+    const commentExist = await prisma.comments.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!commentExist) {
+      throw new GraphQLYogaError("Comment is not available");
+    }
+
+    const deletedComment = await prisma.comments.delete({
+      where: { id: Number(id) },
+    });
+
+    return deletedComment;
+  },
 };
 
 export { Mutation as default };

@@ -23,6 +23,7 @@ const typeDefinitions = /* GraphQL */ `
     createComment(data: CreateCommentInput!): CommentPayLoad!
     createCommentPrisma(data: CreateCommentInput!): Comment!
     deleteComment(id: ID!): CommentPayLoad!
+    deleteCommentPrisma(id: ID!): Comment!
     updateComment(
       id: ID!
       author: ID!
