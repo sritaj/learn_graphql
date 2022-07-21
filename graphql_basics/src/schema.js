@@ -13,6 +13,7 @@ const typeDefinitions = /* GraphQL */ `
     createUser(data: CreateUserInput!): UserPayload!
     createUserPrisma(data: CreateUserInput!): User!
     deleteUser(id: ID!): UserPayload!
+    deleteUserPrisma(id: ID!): User!
     updateUser(id: ID!, data: UpdateUserInput!): UserPayload!
     updateUserPrisma(id: ID!, data: UpdateUserInput!): User!
     createPost(data: CreatePostInput!): PostPayLoad!

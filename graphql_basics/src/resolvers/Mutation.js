@@ -390,6 +390,25 @@ const Mutation = {
 
     return updatedUser;
   },
+  deleteUserPrisma: async (parent, args, { prisma }, info) => {
+    const { id } = args;
+
+    const userExist = await prisma.users.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!userExist) {
+      throw new GraphQLYogaError("User is not available");
+    }
+
+    const deletedUser = await prisma.users.delete({
+      where: { id: Number(id) },
+    });
+
+    return deletedUser;
+  },
   createPostPrisma: async (parent, args, { prisma }, info) => {
     const { title, body, published, author } = args.data;
 
@@ -453,7 +472,6 @@ const Mutation = {
   deletePostPrisma: async (parent, args, { prisma }, info) => {
     const { id } = args;
 
-    console.log(id);
     const postExist = await prisma.posts.findUnique({
       where: {
         id: Number(id),
