@@ -17,4 +17,25 @@ model Users {
   age       Int  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt  
+  posts     Posts[] 
+  comments  Comments[]
+}
+
+model Posts {
+  id        Int      @id @default(autoincrement())
+  title String
+    body String 
+    published Boolean
+    authorID Int 
+    author Users @relation(fields: [authorID], references: [id])
+    comments Comments[] 
+}
+
+model Comments {
+  id        Int      @id @default(autoincrement())
+   text String
+   authorID Int
+   postID Int
+    author Users @relation(fields: [authorID], references: [id])
+    post Posts @relation(fields: [postID], references: [id])
 }
