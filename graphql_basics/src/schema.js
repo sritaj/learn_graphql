@@ -47,6 +47,7 @@ const typeDefinitions = /* GraphQL */ `
   input CreateUserInput {
     name: String!
     email: String!
+    password: String!
     age: Int
   }
 
@@ -83,6 +84,7 @@ const typeDefinitions = /* GraphQL */ `
     id: ID!
     name: String!
     email: String!
+    password: String!
     age: Int
     posts: [Post!]!
     comments: [Comment!]!

@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { GraphQLYogaError } from "@graphql-yoga/node";
+import bcryptjs from "bcrypt";
 
 const Mutation = {
   createUser: async (parent, args, { db, prisma }, info) => {
@@ -333,7 +334,7 @@ const Mutation = {
   },
   //Mutations for Prisma
   createUserPrisma: async (parent, args, { prisma }, info) => {
-    const { name, email, age } = args.data;
+    const { name, email, password, age } = args.data;
 
     const emailTaken = await prisma.users.findUnique({
       where: {
@@ -345,11 +346,20 @@ const Mutation = {
       throw new GraphQLYogaError("Email taken");
     }
 
+    if (password.length < 8) {
+      throw new GraphQLYogaError(
+        "Password is too short!! Min 8 characters is required."
+      );
+    }
+
+    const hashedPassword = await bcryptjs.hash(password, 10);
+
     const createdUser = await prisma.users.create({
       data: {
         name,
         email,
         age,
+        password: hashedPassword,
       },
     });
 
