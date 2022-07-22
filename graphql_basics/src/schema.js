@@ -44,6 +44,7 @@ const typeDefinitions = /* GraphQL */ `
     # Mutations for Data stored in Postgresql via PRISMA ORM using JWT Token for Authentication & Authorization
     loginPrisma(data: UserLoginPayload!): AuthUserPayload!
     createPostPrismaWithJWTToken(data: CreatePostInputWithToken!): Post!
+    updatePostPrismaWithJWTToken(id: ID!, data: UpdatePostInput!): Post!
   }
 
   type Subscription {

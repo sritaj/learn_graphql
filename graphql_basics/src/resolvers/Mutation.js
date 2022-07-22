@@ -645,6 +645,52 @@ const Mutation = {
 
     return createdPost;
   },
+  updatePostPrismaWithJWTToken: async (
+    parent,
+    args,
+    { prisma, request },
+    info
+  ) => {
+    const { id, author } = args;
+
+    const postExist = await prisma.posts.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!postExist) {
+      throw new GraphQLYogaError("Post is not available");
+    }
+    const { title, body, published } = args.data;
+
+    const userId = getUserId(request);
+
+    const correctAuthor = await prisma.posts.findMany({
+      where: {
+        AND: [{ authorID: Number(userId), id: Number(id) }],
+      },
+    });
+
+    if (correctAuthor[0].id !== userId) {
+      throw new GraphQLYogaError("Post belongs to different user");
+    }
+
+    const updatedPost = await prisma.posts.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        title,
+        body,
+        published,
+      },
+    });
+
+    console.log(updatedPost);
+
+    return updatedPost;
+  },
 };
 
 export { Mutation as default };
