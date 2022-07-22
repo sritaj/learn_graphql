@@ -651,7 +651,7 @@ const Mutation = {
     { prisma, request },
     info
   ) => {
-    const { id, author } = args;
+    const { id } = args;
 
     const postExist = await prisma.posts.findUnique({
       where: {
@@ -690,6 +690,77 @@ const Mutation = {
     console.log(updatedPost);
 
     return updatedPost;
+  },
+  updateUserPrismaWithJWTToken: async (
+    parent,
+    args,
+    { prisma, request },
+    info
+  ) => {
+    const userId = getUserId(request);
+    const { name, email, age } = args.data;
+
+    console.log(userId);
+    let emailTaken;
+    if (email) {
+      emailTaken = await prisma.users.findUnique({
+        where: {
+          email,
+        },
+      });
+    }
+
+    if (emailTaken) {
+      throw new GraphQLYogaError("Email taken");
+    }
+
+    console.log(email, name, age);
+    const updatedUser = await prisma.users.update({
+      where: {
+        id: Number(userId),
+      },
+      data: {
+        name,
+        email,
+        age,
+      },
+    });
+
+    console.log(updatedUser);
+
+    return updatedUser;
+  },
+  deletePostPrismaWithJWTToken: async (
+    parent,
+    args,
+    { prisma, request },
+    info
+  ) => {
+    const userId = getUserId(request);
+    const { id } = args;
+
+    const postExist = await prisma.posts.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!postExist) {
+      throw new GraphQLYogaError("Post is not available");
+    }
+
+    console.log(userId);
+    const postAuthor = postExist.authorID;
+
+    let deletedPost;
+    if (Number(postAuthor) === Number(userId)) {
+      deletedPost = await prisma.posts.delete({
+        where: { id: Number(id) },
+      });
+    }
+
+    console.log(deletedPost);
+    return deletedPost;
   },
 };
 

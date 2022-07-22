@@ -29,7 +29,7 @@ const typeDefinitions = /* GraphQL */ `
     # Mutations for Data stored in Postgresql via PRISMA ORM
     createUserPrisma(data: CreateUserInput!): AuthUserPayload!
     deleteUserPrisma(id: ID!): User!
-    updateUserPrisma(data: UpdateUserInput!): User!
+    updateUserPrisma(id: ID!, data: UpdateUserInput!): User!
     createPostPrisma(data: CreatePostInput!): Post!
     updatePostPrisma(id: ID!, author: ID!, data: UpdatePostInput!): Post!
     deletePostPrisma(id: ID!): Post!
@@ -43,8 +43,10 @@ const typeDefinitions = /* GraphQL */ `
 
     # Mutations for Data stored in Postgresql via PRISMA ORM using JWT Token for Authentication & Authorization
     loginPrisma(data: UserLoginPayload!): AuthUserPayload!
+    updateUserPrismaWithJWTToken(data: UpdateUserInput!): User!
     createPostPrismaWithJWTToken(data: CreatePostInputWithToken!): Post!
     updatePostPrismaWithJWTToken(id: ID!, data: UpdatePostInput!): Post!
+    deletePostPrismaWithJWTToken(id: ID!): Post!
   }
 
   type Subscription {
