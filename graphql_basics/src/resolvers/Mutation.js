@@ -791,6 +791,73 @@ const Mutation = {
 
     return comment;
   },
+  deleteCommentPrismaWithJWTToken: async (
+    parent,
+    args,
+    { prisma, request },
+    info
+  ) => {
+    const userId = getUserId(request);
+    const { id } = args;
+
+    const commentExist = await prisma.comments.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!commentExist) {
+      throw new GraphQLYogaError("Comment is not available");
+    }
+
+    const author = commentExist.authorID;
+
+    let deletedComment;
+    if (Number(author) === Number(userId)) {
+      deletedComment = await prisma.comments.delete({
+        where: { id: Number(id) },
+      });
+    }
+
+    return deletedComment;
+  },
+  updateCommentPrismaWithJWTToken: async (
+    parent,
+    args,
+    { prisma, request },
+    info
+  ) => {
+    const userId = getUserId(request);
+    const { id } = args;
+    const { text } = args.data;
+
+    console.log(id);
+    const commentExist = await prisma.comments.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!commentExist) {
+      throw new GraphQLYogaError("Comment is not available");
+    }
+
+    const author = commentExist.authorID;
+
+    let updatedComment;
+    if (Number(author) === Number(userId)) {
+      updatedComment = await prisma.comments.update({
+        where: {
+          id: Number(id),
+        },
+        data: {
+          text,
+        },
+      });
+    }
+
+    return updatedComment;
+  },
 };
 
 export { Mutation as default };

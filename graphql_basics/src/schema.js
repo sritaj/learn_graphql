@@ -53,7 +53,6 @@ const typeDefinitions = /* GraphQL */ `
     deleteCommentPrismaWithJWTToken(id: ID!): Comment!
     updateCommentPrismaWithJWTToken(
       id: ID!
-      author: ID!
       data: UpdateCommentInput!
     ): Comment!
   }
