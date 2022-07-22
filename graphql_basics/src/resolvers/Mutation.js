@@ -1,6 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
 import { GraphQLYogaError } from "@graphql-yoga/node";
 import bcryptjs from "bcrypt";
+import JWT from "jsonwebtoken";
+
+const JWT_AUTH_TOKEN = "MyAccessTokenForBlogProject";
 
 const Mutation = {
   createUser: async (parent, args, { db, prisma }, info) => {
@@ -363,7 +366,10 @@ const Mutation = {
       },
     });
 
-    return createdUser;
+    return {
+      user: createdUser,
+      token: JWT.sign({ id: createdUser.id }, JWT_AUTH_TOKEN),
+    };
   },
   updateUserPrisma: async (parent, args, { prisma }, info) => {
     const { id } = args;
@@ -586,6 +592,32 @@ const Mutation = {
     });
 
     return deletedComment;
+  },
+  loginPrisma: async (parent, args, { prisma }, info) => {
+    const { email, password } = args.data;
+
+    const userExist = await prisma.users.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!userExist) {
+      throw new GraphQLYogaError("Invalid Credentials!!");
+    }
+
+    const { password: encryptedPassword } = userExist;
+
+    const passwordMatch = await bcryptjs.compare(password, encryptedPassword);
+
+    if (!passwordMatch) {
+      throw new GraphQLYogaError("Invalid Credentials!!");
+    }
+
+    return {
+      user: userExist,
+      token: JWT.sign({ id: userExist.id }, JWT_AUTH_TOKEN),
+    };
   },
 };
 
