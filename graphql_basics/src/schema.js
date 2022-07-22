@@ -12,7 +12,7 @@ const typeDefinitions = /* GraphQL */ `
 
   type Mutation {
     createUser(data: CreateUserInput!): UserPayload!
-    createUserPrisma(data: CreateUserInput!): User!
+    createUserPrisma(data: CreateUserInput!): AuthUserPayload!
     deleteUser(id: ID!): UserPayload!
     deleteUserPrisma(id: ID!): User!
     updateUser(id: ID!, data: UpdateUserInput!): UserPayload!
@@ -37,6 +37,7 @@ const typeDefinitions = /* GraphQL */ `
       author: ID!
       data: UpdateCommentInput!
     ): Comment!
+    loginPrisma(data: UserLoginPayload!): AuthUserPayload!
   }
 
   type Subscription {
@@ -78,6 +79,11 @@ const typeDefinitions = /* GraphQL */ `
 
   input UpdateCommentInput {
     text: String!
+  }
+
+  input UserLoginPayload {
+    email: String!
+    password: String!
   }
 
   type User {
@@ -139,6 +145,11 @@ const typeDefinitions = /* GraphQL */ `
   type CommentSubscriptionPayload {
     mutation: MutationType!
     data: Comment!
+  }
+
+  type AuthUserPayload {
+    user: User!
+    token: String!
   }
 `;
 
