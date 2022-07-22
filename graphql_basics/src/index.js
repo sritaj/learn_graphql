@@ -26,7 +26,9 @@ const server = createServer({
     },
     Subscription: {},
   },
-  context: { db, pubSub, prisma },
+  context: (request) => {
+    return { db, pubSub, prisma, request };
+  },
 });
 
 server.start(() => {
