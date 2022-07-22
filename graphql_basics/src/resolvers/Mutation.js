@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import { GraphQLYogaError } from "@graphql-yoga/node";
 import bcryptjs from "bcrypt";
 import JWT from "jsonwebtoken";
+import getUserId from "../utils/getUserId";
 
 const JWT_AUTH_TOKEN = "MyAccessTokenForBlogProject";
 
@@ -428,6 +429,7 @@ const Mutation = {
   createPostPrisma: async (parent, args, { prisma }, info) => {
     const { title, body, published, author } = args.data;
 
+    const userID = getUserId(request);
     const userExist = await prisma.users.findUnique({
       where: { id: Number(author) },
     });
@@ -618,6 +620,28 @@ const Mutation = {
       user: userExist,
       token: JWT.sign({ id: userExist.id }, JWT_AUTH_TOKEN),
     };
+  },
+  //
+  createPostPrismaWithJWTToken: async (
+    parent,
+    args,
+    { prisma, request },
+    info
+  ) => {
+    const { title, body, published } = args.data;
+
+    const userId = getUserId(request);
+
+    const createdPost = await prisma.posts.create({
+      data: {
+        title,
+        body,
+        published,
+        authorID: Number(userId),
+      },
+    });
+
+    return createdPost;
   },
 };
 
