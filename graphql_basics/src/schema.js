@@ -19,6 +19,7 @@ const typeDefinitions = /* GraphQL */ `
     updateUserPrisma(id: ID!, data: UpdateUserInput!): User!
     createPost(data: CreatePostInput!): PostPayLoad!
     createPostPrisma(data: CreatePostInput!): Post!
+    createPostPrismaWithJWTToken(data: CreatePostInputWithToken!): Post!
     deletePost(id: ID!): PostPayLoad!
     updatePost(id: ID!, author: ID!, data: UpdatePostInput!): PostPayLoad!
     updatePostPrisma(id: ID!, author: ID!, data: UpdatePostInput!): Post!
@@ -63,6 +64,12 @@ const typeDefinitions = /* GraphQL */ `
     body: String!
     published: Boolean!
     author: ID!
+  }
+
+  input CreatePostInputWithToken {
+    title: String!
+    body: String!
+    published: Boolean!
   }
 
   input UpdatePostInput {
