@@ -762,6 +762,35 @@ const Mutation = {
     console.log(deletedPost);
     return deletedPost;
   },
+  createCommentPrismaWithJWTToken: async (
+    parent,
+    args,
+    { prisma, request },
+    info
+  ) => {
+    const userId = getUserId(request);
+    const { text, post } = args.data;
+
+    const postExist = await prisma.posts.findMany({
+      where: {
+        AND: { id: Number(post), published: true },
+      },
+    });
+
+    if (postExist.length === 0) {
+      throw new GraphQLYogaError("Post is not available");
+    }
+
+    const comment = await prisma.comments.create({
+      data: {
+        text,
+        authorID: Number(userId),
+        postID: Number(post),
+      },
+    });
+
+    return comment;
+  },
 };
 
 export { Mutation as default };

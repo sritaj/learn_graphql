@@ -47,6 +47,15 @@ const typeDefinitions = /* GraphQL */ `
     createPostPrismaWithJWTToken(data: CreatePostInputWithToken!): Post!
     updatePostPrismaWithJWTToken(id: ID!, data: UpdatePostInput!): Post!
     deletePostPrismaWithJWTToken(id: ID!): Post!
+    createCommentPrismaWithJWTToken(
+      data: CreateCommentInputWithToken!
+    ): Comment!
+    deleteCommentPrismaWithJWTToken(id: ID!): Comment!
+    updateCommentPrismaWithJWTToken(
+      id: ID!
+      author: ID!
+      data: UpdateCommentInput!
+    ): Comment!
   }
 
   type Subscription {
@@ -89,6 +98,11 @@ const typeDefinitions = /* GraphQL */ `
   input CreateCommentInput {
     text: String!
     author: ID!
+    post: ID!
+  }
+
+  input CreateCommentInputWithToken {
+    text: String!
     post: ID!
   }
 
