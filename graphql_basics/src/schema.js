@@ -11,34 +11,39 @@ const typeDefinitions = /* GraphQL */ `
   }
 
   type Mutation {
+    # Mutations for Data stored in db.js file
     createUser(data: CreateUserInput!): UserPayload!
-    createUserPrisma(data: CreateUserInput!): AuthUserPayload!
     deleteUser(id: ID!): UserPayload!
-    deleteUserPrisma(id: ID!): User!
     updateUser(id: ID!, data: UpdateUserInput!): UserPayload!
-    updateUserPrisma(id: ID!, data: UpdateUserInput!): User!
     createPost(data: CreatePostInput!): PostPayLoad!
-    createPostPrisma(data: CreatePostInput!): Post!
-    createPostPrismaWithJWTToken(data: CreatePostInputWithToken!): Post!
     deletePost(id: ID!): PostPayLoad!
     updatePost(id: ID!, author: ID!, data: UpdatePostInput!): PostPayLoad!
-    updatePostPrisma(id: ID!, author: ID!, data: UpdatePostInput!): Post!
-    deletePostPrisma(id: ID!): Post!
     createComment(data: CreateCommentInput!): CommentPayLoad!
-    createCommentPrisma(data: CreateCommentInput!): Comment!
     deleteComment(id: ID!): CommentPayLoad!
-    deleteCommentPrisma(id: ID!): Comment!
     updateComment(
       id: ID!
       author: ID!
       data: UpdateCommentInput!
     ): CommentPayLoad!
+
+    # Mutations for Data stored in Postgresql via PRISMA ORM
+    createUserPrisma(data: CreateUserInput!): AuthUserPayload!
+    deleteUserPrisma(id: ID!): User!
+    updateUserPrisma(data: UpdateUserInput!): User!
+    createPostPrisma(data: CreatePostInput!): Post!
+    updatePostPrisma(id: ID!, author: ID!, data: UpdatePostInput!): Post!
+    deletePostPrisma(id: ID!): Post!
+    createCommentPrisma(data: CreateCommentInput!): Comment!
+    deleteCommentPrisma(id: ID!): Comment!
     updateCommentPrisma(
       id: ID!
       author: ID!
       data: UpdateCommentInput!
     ): Comment!
+
+    # Mutations for Data stored in Postgresql via PRISMA ORM using JWT Token for Authentication & Authorization
     loginPrisma(data: UserLoginPayload!): AuthUserPayload!
+    createPostPrismaWithJWTToken(data: CreatePostInputWithToken!): Post!
   }
 
   type Subscription {

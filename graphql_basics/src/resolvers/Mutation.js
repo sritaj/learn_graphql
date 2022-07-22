@@ -7,6 +7,7 @@ import getUserId from "../utils/getUserId";
 const JWT_AUTH_TOKEN = "MyAccessTokenForBlogProject";
 
 const Mutation = {
+  //Mutations resolvers for Data stored in db.js file
   createUser: async (parent, args, { db, prisma }, info) => {
     const emailTaken = db.users.some((user) => user.email === args.data.email);
 
@@ -336,7 +337,7 @@ const Mutation = {
 
     return { userErrors: [], comment: comment };
   },
-  //Mutations for Prisma
+  //Mutations Resolvers for Data stored in Postgresql via PRISMA ORM
   createUserPrisma: async (parent, args, { prisma }, info) => {
     const { name, email, password, age } = args.data;
 
@@ -595,6 +596,7 @@ const Mutation = {
 
     return deletedComment;
   },
+  //Mutations resolvers for Data stored in Postgresql via PRISMA ORM using JWT Token for Authentication & Authorization
   loginPrisma: async (parent, args, { prisma }, info) => {
     const { email, password } = args.data;
 
