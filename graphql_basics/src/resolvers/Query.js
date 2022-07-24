@@ -1,4 +1,6 @@
 import { prisma } from "..";
+import { GraphQLYogaError } from "@graphql-yoga/node";
+import getUserId from "../utils/getUserId";
 
 const Query = {
   users: (parent, args, { db }, info) => {
@@ -63,6 +65,33 @@ const Query = {
   },
   commentsPrisma: async (parent, args, { prisma }, info) => {
     return await prisma.comments.findMany();
+  },
+  postPrisma: async (parent, args, { prisma, request }, info) => {
+    const authenticationRequired = false;
+    const userId = getUserId(request, authenticationRequired);
+    const { id } = args;
+
+    if (!userId) {
+      const postExists = await prisma.posts.findMany({
+        where: { AND: { id: Number(id), published: true } },
+      });
+
+      if (postExists.length === 0) {
+        throw new GraphQLYogaError("Post not found");
+      }
+
+      return postExists[0];
+    }
+
+    const post = await prisma.posts.findUnique({
+      where: { id: Number(id) },
+    });
+
+    if (!post) {
+      throw new GraphQLYogaError("Post not found -1");
+    }
+
+    return post;
   },
 };
 
