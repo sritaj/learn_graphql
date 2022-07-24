@@ -15,6 +15,7 @@ const typeDefinitions = /* GraphQL */ `
     # Queries for Data stored in Postgresql via PRISMA ORM using JWT Token for Authentication & Authorization
     postPrisma(id: ID!): Post!
     userPrisma(id: ID!): User!
+    myPosts(query: String): [Post!]!
   }
 
   type Mutation {
