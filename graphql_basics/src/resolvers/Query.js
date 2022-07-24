@@ -3,6 +3,7 @@ import { GraphQLYogaError } from "@graphql-yoga/node";
 import getUserId from "../utils/getUserId";
 
 const Query = {
+  //Query resolvers for Data stored in db.js file/hardcoded data
   users: (parent, args, { db }, info) => {
     if (!args.query) return db.users;
 
@@ -38,7 +39,7 @@ const Query = {
       published: true,
     };
   },
-  //Query for Prisma
+  //Query Resolvers for Data stored in Postgresql via PRISMA ORM
   usersPrisma: async (parent, args, { prisma }, info) => {
     if (!args.query) return await prisma.users.findMany();
 
@@ -66,6 +67,7 @@ const Query = {
   commentsPrisma: async (parent, args, { prisma }, info) => {
     return await prisma.comments.findMany();
   },
+  //Query resolvers for Data stored in Postgresql via PRISMA ORM using JWT Token for Authentication & Authorization
   postPrisma: async (parent, args, { prisma, request }, info) => {
     const authenticationRequired = false;
     const userId = getUserId(request, authenticationRequired);
@@ -88,10 +90,30 @@ const Query = {
     });
 
     if (!post) {
-      throw new GraphQLYogaError("Post not found -1");
+      throw new GraphQLYogaError("Post not found");
     }
 
     return post;
+  },
+  userPrisma: async (parent, args, { prisma, request }, info) => {
+    const userId = getUserId(request, true);
+    const { id } = args;
+
+    const userExists = await prisma.users.findUnique({
+      where: { id: Number(id) },
+    });
+
+    if (!userExists) {
+      throw new GraphQLYogaError("User doesn't exist");
+    }
+
+    if (userExists.id !== userId) {
+      throw new GraphQLYogaError(
+        "Logged In User is different, cannot query for specified User ID"
+      );
+    }
+
+    return userExists;
   },
 };
 
