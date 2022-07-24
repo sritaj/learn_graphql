@@ -115,6 +115,32 @@ const Query = {
 
     return userExists;
   },
+  myPosts: async (parent, args, { prisma, request }, info) => {
+    const userId = getUserId(request, true);
+
+    const posts = await prisma.users.findMany({
+      where: { authorID: Number(userId) },
+    });
+
+    if (!query) {
+      if (posts.length === 0) {
+        throw new GraphQLYogaError("Post(s) not found");
+      }
+
+      return posts;
+    }
+
+    const specificPosts = posts.findMany({
+      where: {
+        title: {
+          startsWith: args.query,
+          mode: "insensitive",
+        },
+      },
+    });
+
+    return specificPosts;
+  },
 };
 
 export { Query as default };
