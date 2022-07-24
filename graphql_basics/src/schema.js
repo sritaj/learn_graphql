@@ -1,19 +1,20 @@
 const typeDefinitions = /* GraphQL */ `
   type Query {
-    # Queries for Data stored in db.js file
+    # Queries for Data stored in db.js file/hard-coded data
     users(query: String): [User!]!
     posts(query: String): [Post!]!
     comments: [Comment!]!
+    me: User!
+    post: Post!
 
     # Queries for Data stored in Postgresql via PRISMA ORM
     usersPrisma(query: String): [User!]!
     postsPrisma(query: String): [Post!]!
     commentsPrisma: [Comment!]!
 
+    # Queries for Data stored in Postgresql via PRISMA ORM using JWT Token for Authentication & Authorization
     postPrisma(id: ID!): Post!
-
-    me: User!
-    post: Post!
+    userPrisma(id: ID!): User!
   }
 
   type Mutation {
