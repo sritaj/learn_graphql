@@ -1,11 +1,17 @@
 const typeDefinitions = /* GraphQL */ `
   type Query {
+    # Queries for Data stored in db.js file
     users(query: String): [User!]!
-    usersPrisma(query: String): [User!]!
     posts(query: String): [Post!]!
-    postsPrisma(query: String): [Post!]!
     comments: [Comment!]!
+
+    # Queries for Data stored in Postgresql via PRISMA ORM
+    usersPrisma(query: String): [User!]!
+    postsPrisma(query: String): [Post!]!
     commentsPrisma: [Comment!]!
+
+    postPrisma(id: ID!): Post!
+
     me: User!
     post: Post!
   }
