@@ -627,7 +627,7 @@ const Mutation = {
   createPostPrismaWithJWTToken: async (
     parent,
     args,
-    { prisma, request },
+    { prisma, request, pubSub },
     info
   ) => {
     const { title, body, published } = args.data;
@@ -642,6 +642,12 @@ const Mutation = {
         authorID: Number(userId),
       },
     });
+
+    if (published) {
+      pubSub.publish(`post`, {
+        post: { mutation: "CREATED", data: createdPost },
+      });
+    }
 
     return createdPost;
   },
