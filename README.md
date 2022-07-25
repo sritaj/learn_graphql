@@ -41,15 +41,15 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
 
 ## Projects
 
-1. **e-commerce-app** - mini project, containing examples for GraphQL schemas, queries, implementation to check on the apollo live-server
+1. **e-commerce-app** - mini project, containing examples for GraphQL schemas, queries, resolvers, implementation to check on the apollo live-server
 
 2. **car-shop** - dummy project to list the best practices for defining GraphQL schemas, queries etc; no implementation to check
 
-3. **blog-app** - mini project, showcasing GraphQL integration with PostgreSQL hosted in Heroku Platform, utilising Prisma ORM
+3. **blog-app** - mini project, showcasing GraphQL integration with PostgreSQL hosted in Heroku Platform, utilising Prisma ORM, Authentication & Authorization using JWT Token
 
 4. **blog-app-frontend** - mini project, created on React platform, showcasing frontend integration with GraphQL backend(utilising **blog-app** project for backend portion)
 
-5. **graphql_basics** - mini project, containing examples for GraphQL schemas, queries, implementation to check on the graphql yoga server, showcasing GraphQL integration with PostgreSQL hosted in Heroku Platform, utilising Prisma ORM
+5. **graphql_basics** - mini project, containing examples for GraphQL schemas, queries, resolvers, implementation to check on the graphql yoga server, showcasing GraphQL integration with PostgreSQL hosted in Heroku Platform, utilising Prisma ORM, Authentication & Authorization using JWT Token
 
 ## Instructions
 
@@ -131,6 +131,14 @@ This repository includes examples and mini-projects demonstrating GraphQL featur
 ## Not Included/Implemented
 
 1. Examples showcasing DB connection in local machine with GraphQL backend and PRISMA ORM (PostgreSQL setup for mini-projects is done at [Heroku](https://dashboard.heroku.com/))
+2. Unit Tests for GraphQL
+
+## Troubleshoot/Quick Help
+
+1. For **_graphql_basics_** and **_blog-app_** project, generate the JWT Token and provide it in Request Headers of respective GraphQL server(Apollo and GraphQL Yoga) to operations deomonstrating the Queries/Mutations requiring Authentication & Authorization
+
+   - For **_graphql_basics_** project create a user using **createUserPrisma** mutation and followed up with **loginPrisma** to retrieve the token; mutations with the name ending with **_WithJWTToken.js_** and few queries require the token
+   - For **_blog-app_** project use the **signup** mutation to create a user and generate the token, all relevant examples require token
 
 ## Special Thanks
 
