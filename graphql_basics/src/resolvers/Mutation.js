@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
 import { GraphQLYogaError } from "@graphql-yoga/node";
 import bcryptjs from "bcrypt";
-import JWT from "jsonwebtoken";
 import getUserId from "../utils/getUserId";
 import generateToken from "../utils/generateToken";
+import hashedPassword from "../utils/hashedPassword";
 
 const Mutation = {
   //Mutations resolvers for Data stored in db.js file
@@ -350,20 +350,15 @@ const Mutation = {
       throw new GraphQLYogaError("Email taken");
     }
 
-    if (password.length < 8) {
-      throw new GraphQLYogaError(
-        "Password is too short!! Min 8 characters is required."
-      );
-    }
+    const pwd = await hashedPassword(password);
 
-    const hashedPassword = await bcryptjs.hash(password, 10);
-
+    console.log("Test" + pwd);
     const createdUser = await prisma.users.create({
       data: {
         name,
         email,
         age,
-        password: hashedPassword,
+        password: pwd,
       },
     });
 
@@ -703,9 +698,8 @@ const Mutation = {
     info
   ) => {
     const userId = getUserId(request);
-    const { name, email, age } = args.data;
+    const { name, email, age, password } = args.data;
 
-    console.log(userId);
     let emailTaken;
     if (email) {
       emailTaken = await prisma.users.findUnique({
@@ -719,7 +713,11 @@ const Mutation = {
       throw new GraphQLYogaError("Email taken");
     }
 
-    console.log(email, name, age);
+    console.log(email, name, age, password);
+
+    const pwd = await hashedPassword(password);
+    console.log(pwd);
+
     const updatedUser = await prisma.users.update({
       where: {
         id: Number(userId),
@@ -728,6 +726,7 @@ const Mutation = {
         name,
         email,
         age,
+        password: pwd,
       },
     });
 
