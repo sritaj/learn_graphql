@@ -3,8 +3,7 @@ import { GraphQLYogaError } from "@graphql-yoga/node";
 import bcryptjs from "bcrypt";
 import JWT from "jsonwebtoken";
 import getUserId from "../utils/getUserId";
-
-const JWT_AUTH_TOKEN = "MyAccessTokenForBlogProject";
+import generateToken from "../utils/generateToken";
 
 const Mutation = {
   //Mutations resolvers for Data stored in db.js file
@@ -370,7 +369,7 @@ const Mutation = {
 
     return {
       user: createdUser,
-      token: JWT.sign({ id: createdUser.id }, JWT_AUTH_TOKEN),
+      token: generateToken(createdUser.id),
     };
   },
   updateUserPrisma: async (parent, args, { prisma }, info) => {
@@ -620,9 +619,7 @@ const Mutation = {
 
     return {
       user: userExist,
-      token: JWT.sign({ id: userExist.id }, JWT_AUTH_TOKEN, {
-        expiresIn: "50000",
-      }),
+      token: generateToken(userExist.id),
     };
   },
   //
