@@ -81,6 +81,7 @@ const typeDefinitions = /* GraphQL */ `
     name: String
     email: String
     age: Int
+    password: String
   }
 
   input CreatePostInput {
