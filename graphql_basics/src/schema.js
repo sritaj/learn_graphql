@@ -131,6 +131,8 @@ const typeDefinitions = /* GraphQL */ `
     age: Int
     posts: [Post!]!
     comments: [Comment!]!
+    createdAt: String!
+    updatedAt: String!
   }
 
   type Post {
