@@ -5,7 +5,8 @@ const JWT_AUTH_TOKEN = "MyAccessTokenForBlogProject";
 
 const getUserId = (request, requireAuth = true) => {
   if (requireAuth) {
-    const header = request.extensions.headers.Authentication;
+    const header = request.extensions.headers.Authorization;
+    //  const header = request.extensions.headers.Authentication;
 
     if (header) {
       const token = header.replace("Bearer ", "");
