@@ -125,7 +125,7 @@ const typeDefinitions = /* GraphQL */ `
   type User {
     id: ID!
     name: String!
-    email: String!
+    email: String
     password: String!
     age: Int
     posts: [Post!]!
