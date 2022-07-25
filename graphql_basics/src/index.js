@@ -8,6 +8,7 @@ import Comment from "./resolvers/Comment";
 import typeDefinitions from "./schema";
 import { PrismaClient } from "@prisma/client";
 import db from "./db";
+import { resolvers } from "./resolvers/index";
 
 export const prisma = new PrismaClient();
 
@@ -16,14 +17,7 @@ const pubSub = createPubSub();
 const server = createServer({
   schema: {
     typeDefs: typeDefinitions,
-    resolvers: {
-      Query,
-      Mutation,
-      Subscription,
-      Post,
-      User,
-      Comment,
-    },
+    resolvers: resolvers,
     Subscription: {},
   },
   context: (request) => {
