@@ -620,7 +620,9 @@ const Mutation = {
 
     return {
       user: userExist,
-      token: JWT.sign({ id: userExist.id }, JWT_AUTH_TOKEN),
+      token: JWT.sign({ id: userExist.id }, JWT_AUTH_TOKEN, {
+        expiresIn: "50000",
+      }),
     };
   },
   //
