@@ -53,7 +53,14 @@ const Query = {
     });
   },
   postsPrisma: async (parent, args, { prisma }, info) => {
-    if (!args.query) return await prisma.posts.findMany();
+    if (!args.query)
+      return await prisma.posts.findMany({
+        take: 4,
+        skip: 0,
+        orderBy: {
+          id: "asc",
+        },
+      });
 
     return await prisma.posts.findMany({
       where: {
